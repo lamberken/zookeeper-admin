@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>ZooKeeper Admin</title>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/common.css"/>
+    <script src="../assets/js/base/jquery-2.1.3.js"></script>
+    <script src="../assets/js/base/jquery.cookie.min.js"></script>
+    <script src="../assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- datatable -->
+    <link rel="stylesheet" href="../assets/js/plugins/datatables/dataTables.min.css">
+    <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- chosen -->
+    <link rel="stylesheet" href="../assets/css/chosen.min.css"/>
+    <script src="../assets/js/base/chosen.jquery.min.js"></script>
+    <!-- jstree -->
+    <link rel="stylesheet" href="../assets/js/plugins/jstree/dist/themes/default/style.min.css"/>
+    <script src="../assets/js/plugins/jstree/dist/jstree.min.js"></script>
+    <!-- vue -->
+    <script src="../assets/js/plugins/vue/vue.js"></script>
+    <!-- scojs -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- layer -->
+    <link rel="stylesheet" href="../assets/js/plugins/layer/skin/layer.css"/>
+    <script src="../assets/js/plugins/layer/layer.js"></script>
+    <!-- select2 -->
+    <link rel="stylesheet" href="../assets/js/plugins/select2/select2.min.css"/>
+    <script src="../assets/js/plugins/select2/select2.min.js"></script>
+    <script src="../assets/js/plugins/select2/i18n/zh-CN.js"></script>
+
+    <link rel="stylesheet" href="../assets/css/jquery.gritter.min.css" />
+    <script src="../assets/js/base/jquery.gritter.min.js"></script>
+
+    <!-- validator -->
+    <link rel="stylesheet" href="../assets/js/plugins/bootstrapValidator/bootstrapValidator.min.css"/>
+    <script src="../assets/js/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
+    <script src="../assets/js/plugins/bootstrapValidator/zh_CN.js"></script>
+
+    <!-- common -->
+    <script src="../assets/common/utils.js"></script>
+    <link rel="stylesheet" href="../assets/common/common.css"/>
+    <script src="../assets/common/common.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <script src="../assets/js/base/ace-extra.min.js"></script>
+    <script src="../assets/js/base/ace-elements.min.js"></script>
+    <script src="../assets/js/base/ace.min.js"></script>
+
+    <style>
+
+        .widget-header {
+            border-bottom: 0px solid #DCE8F1 !important;
+        }
+
+        .widget-header button {
+            margin-right: 3px;
+        }
+
+        table td {
+            font-size: 15px;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+
+        .content {
+            text-align: left;
+            padding-top: 7px;
+        }
+
+        .select2-search:after {
+            display: none;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            border-radius: 0px;
+        }
+
+        .select2-container--default .select2-selection--multiple:focus {
+            border-color: #f59942;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #f59942;
+            border: 1px solid #f59942 !important;
+        }
+
+        .select2-dropdown {
+            border: 1px solid #f59942;
+        }
+
+        .symbol {
+            padding-top: 5px;
+            padding-left: 3px;
+            margin-right: 2px;
+            display: inline-block;
+            float: left;
+        }
+
+    </style>
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="index.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf" style="color: #5df910!important"></i>
+                    <b>ZooKeeper Admin</b>
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="../assets/images/system/user.jpg" alt="Jason's Photo"/>
+                        <span class="user-info">
+									您好, <span id="loginUname"></span>
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" id="exitSystemB">
+                                <i class="ace-icon fa fa-power-off"></i>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /.navbar-container -->
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+
+    <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+
+        <ul class="nav nav-list" style="transition-property: top; transition-duration: 0.15s;">
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text">
+                                集群管理
+                            </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="manager_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群配置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_nodes.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 节点信息
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_status.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_machines.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 机器状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa  fa-gavel "></i>
+                    <span class="menu-text"> 集群监控 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="active">
+                        <a href="alarm_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            报警设置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-cogs"></i>
+                    <span class="menu-text"> 系统设置 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+
+                    <li class="">
+                        <a href="system_cluster_about.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            关于
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-graduation-cap"></i>
+                    <span class="menu-text"> 文档学习 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="keeper_cluster_study.html">
+                            <i class="menu-icon fa fa-angghnle-right"></i> ZooKeeper 分布式
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+        </ul><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-flat"
+                                 style="border-bottom: 0px solid #DCE8F1;">
+                                <h3 class="header smaller lighter black"><i
+                                        class="ace-icon glyphicon glyphicon-align-justify"></i>&nbsp;监控设置
+                                    &nbsp;&nbsp;
+                                </h3>
+                            </div>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right"
+                                                   for="clusterList"> 选择集群 </label>
+                                            <div class="col-sm-2">
+                                                <select class="chosen-select form-control clusterList"
+                                                        id="clusterList"
+                                                        data-placeholder="请选择...">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-info btn-sm" type="button"
+                                                        id="submitClusterID">
+                                                    选择
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="hr hr-dotted hr-8"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box transparent">
+
+                            <div class="widget-header widget-header-flat">
+                                <h4 class="header smaller lighter black" style="    margin-top: 0px !important;">
+                                    <i class="ace-icon glyphicon glyphicon-align-justify"></i>&nbsp;报警配置
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn-xs btn-danger pull-right" id="removeAlarmSettingBtn">
+                                        <b>删除报警配置</b>
+                                    </button>
+                                    <button class="btn btn-xs btn-primary pull-right upAlarmSettingBtn">
+                                        <b>配置报警项目</b>
+                                    </button>
+                                    <!--<button class="btn btn-xs btn-success pull-right upAlarmSettingBtn">-->
+                                        <!--<b>新增配置</b>-->
+                                    <!--</button>-->
+                                </h4>
+                            </div>
+
+                            <div class="widget-body" id="clusterSettingInfo"
+                                 style="margin-top: 30px;text-align: center;vertical-align: middle;">
+                                <form class="form-horizontal" role="form">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">CPU峰值报警</label>
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.maxCpuPCT}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">内存峰值报警</label>
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.maxMemoryPCT}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">硬盘峰值报警</label>
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.maxDiskPCT}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">单机 连接数
+                                            峰值报警</label>
+
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.maxConnectionPerIp}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">单机 Watch数
+                                            峰值报警</label>
+
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.maxWatchPerIp}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">报警收件人</label>
+
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.jobNumList}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="font-weight: bold">报警等级</label>
+                                        <div class="col-sm-8 content">
+                                            {{clusterSetting.routeChannelNames}}
+                                        </div>
+
+
+                                    </div>
+                                </form>
+                            </div><!-- /.widget-body -->
+
+                        </div><!-- /.widget-box -->
+                        <div class="hr hr32 hr-dotted"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="modal" id="upAlarmSettingWIN" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="width: 780px">
+
+                            <div class="modal-content">
+                                <form id="defaultForm" class="form-horizontal" role="form">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title">
+                                            <b> 监控项目 </b>
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body" id="clusterSettingModel">
+
+
+                                        <input type="text" v-model='clusterSetting.clusterID' name="clusterID"
+                                               class="hidden"/>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">CPU峰值报警</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"
+                                                       class="col-sm-6"
+                                                       name="maxCpuPCT"
+                                                       v-model='clusterSetting.maxCpuPCT'
+                                                       data-toggle="tooltip" data-html="true"
+                                                       title="数值，无需 %"/>
+
+                                                <span class="symbol"> % </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">内存峰值报警</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text"
+                                                       class="col-sm-6"
+                                                       name="maxMemoryPCT"
+                                                       v-model='clusterSetting.maxMemoryPCT'
+                                                       data-toggle="tooltip" data-html="true"
+                                                       title="数值，无需 %"/>
+                                                <span class="symbol"> % </span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">硬盘峰值报警</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text"
+                                                       class="col-sm-6"
+                                                       name="maxDiskPCT"
+                                                       v-model='clusterSetting.maxDiskPCT'
+                                                       data-toggle="tooltip" data-html="true"
+                                                       title="数值，无需 %"/>
+                                                <span class="symbol"> % </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">单机 连接数 峰值报警</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text"
+                                                       class="col-sm-6"
+                                                       name="maxConnectionPerIp"
+                                                       v-model='clusterSetting.maxConnectionPerIp'
+                                                       data-toggle="tooltip" data-html="true"
+                                                       title="填数值"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">单机 Watch数 峰值报警</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text"
+                                                       class="col-sm-6"
+                                                       name="maxWatchPerIp"
+                                                       v-model='clusterSetting.maxWatchPerIp'
+                                                       data-toggle="tooltip" data-html="true"
+                                                       title="填数值"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">报警收件人</label>
+                                            <div class="col-sm-8">
+                                                <select class="js-data-example-ajax" data-placeholder="请选择"
+                                                        id="alarmJobNums"
+                                                        name='alarmJobNums'
+                                                        style="width: 345px;">
+
+                                                    <option v-for="alarmJobNum in clusterSetting.jobNumList"
+                                                            :value="alarmJobNum" selected>{{alarmJobNum}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">报警等级</label>
+
+
+                                            <div class="col-sm-8">
+
+                                                <div class="">
+
+                                                    <label>
+                                                        <input name="routeChannelIDs" type="checkbox" value="weixin"
+                                                               v-model="clusterSetting.routeChannelIDs"
+                                                               class="ace ace-checkbox-2">
+                                                        <span class="lbl"> 微信 </span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="routeChannelIDs" type="checkbox" value="duanxin"
+                                                               v-model="clusterSetting.routeChannelIDs"
+                                                               class="ace ace-checkbox-2">
+                                                        <span class="lbl"> 短信 </span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="routeChannelIDs" type="checkbox" value="youjian"
+                                                               v-model="clusterSetting.routeChannelIDs"
+                                                               class="ace ace-checkbox-2">
+                                                        <span class="lbl"> 邮件 </span>
+                                                    </label>
+                                                    <label>
+                                                        <input name="routeChannelIDs" type="checkbox" value="dianhua"
+                                                               v-model="clusterSetting.routeChannelIDs"
+                                                               class="ace ace-checkbox-2">
+                                                        <span class="lbl"> 拨打电话 </span>
+                                                    </label>
+
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            关闭
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            添加
+                                        </button>
+
+                                    </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+
+
+    /**
+     *  gloal data funtions
+     *
+     */
+    var PageGlobalData = {
+        services: {
+
+            upAlarmSetting: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/alarm/upAlarmSetting",
+            getAlarmSetting: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/alarm/getAlarmSetting",
+            listZKClusters: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/listZKClusters",
+            userQuery: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/system/userQuery"
+        },
+
+        clusterID: '',
+        jobNumList: '',
+        jobNameList: ''
+    };
+
+
+    $(function () {
+
+
+        /**
+         *  vues
+         */
+        var clusterSettingInfoVue = new Vue({
+            el: '#clusterSettingInfo',
+            data: {
+                clusterSetting: {
+//                    clusterID
+//                    routeChannelNames:['']
+//                    routeChannelNames:['']
+
+                }
+            },
+            methods: {
+                setClusterSettingData: function (clusterSettingData) {
+                    this.clusterSetting = {}
+
+                    /**
+                     * 解析 渠道
+                     */
+                    var routeChannelsA = clusterSettingData.routeChannelIDs;
+                    var routeChannelsS = '';
+                    for (var i in routeChannelsA) {
+                        var rc = routeChannelsA[i];
+
+                        // youjian weixin duanxin dianhua
+                        if (rc == 'youjian') {
+                            routeChannelsS += '邮件 '
+                        }
+                        if (rc == 'weixin') {
+                            routeChannelsS += '微信 '
+                        }
+                        if (rc == 'duanxin') {
+                            routeChannelsS += '短信 '
+                        }
+                        if (rc == 'dianhua') {
+                            routeChannelsS += '电话'
+                        }
+                    }
+                    clusterSettingData.routeChannelNames = routeChannelsS
+
+                    this.clusterSetting = clusterSettingData;
+                }
+            }
+        })
+
+        var clusterSettingModeVue = new Vue({
+            el: '#clusterSettingModel',
+            data: {
+                // default
+                clusterSetting: {
+                    //  clusterID
+                    maxCpuPCT: 60,
+                    maxMemoryPCT: 60,
+                    maxDiskPCT: 80,
+                    maxConnectionPerIp: 20,
+                    maxWatchPerIp: 100,
+                    jobNumList: [],
+                    routeChannelIDs: [],
+                    checkedNames: []
+                }
+            },
+            methods: {
+                setClusterSettingData: function (clusterSettingData) {
+                    this.clusterSetting = clusterSettingData;
+                }
+                ,
+                saveClusterSettingData: function () {
+
+                    console.log(this.clusterSetting)
+
+                    // return true false
+                }
+
+            }
+        })
+
+        /**
+         * modals
+         * */
+        $('#upAlarmSettingWIN').on('shown.bs.modal', function () {
+            $("[data-toggle='tooltip']").tooltip();
+            $('#defaultForm').bootstrapValidator({
+                message: 'This value is not valid',
+                fields: {
+                    /*验证*/
+                    maxCpuPCT: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                /*非空提示*/
+                                message: '不能为空'
+                            },
+                            stringLength: {
+                                /*长度提示*/
+                                min: 1,
+                                max: 2,
+                                message: '输入有误, 重新输入'
+                            },
+                            regexp: {//匹配规则
+                                regexp: /^[0-9]*[1-9][0-9]*$/,
+                                message: '输入有误, 重新输入'
+                            }
+                        }
+                    },
+                    maxMemoryPCT: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                /*非空提示*/
+                                message: '不能为空'
+                            },
+                            stringLength: {
+                                /*长度提示*/
+                                min: 1,
+                                max: 2,
+                                message: '输入有误, 重新输入'
+                            },
+                            regexp: {//匹配规则
+                                regexp: /^[0-9]*[1-9][0-9]*$/,
+                                message: '输入有误, 重新输入'
+                            }
+                        }
+                    },
+                    maxDiskPCT: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                /*非空提示*/
+                                message: '不能为空'
+                            },
+                            stringLength: {
+                                /*长度提示*/
+                                min: 1,
+                                max: 2,
+                                message: '输入有误, 重新输入'
+                            },
+                            regexp: {//匹配规则
+                                regexp: /^[0-9]*[1-9][0-9]*$/,
+                                message: '输入有误, 重新输入'
+                            }
+                        }
+                    },
+                    maxConnectionPerIp: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                /*非空提示*/
+                                message: '不能为空'
+                            },
+                            stringLength: {
+                                /*长度提示*/
+                                min: 1,
+                                max: 3,
+                                message: '输入有误, 重新输入'
+                            },
+                            regexp: {//匹配规则
+                                regexp: /^[0-9]*[1-9][0-9]*$/,
+                                message: '输入有误, 重新输入'
+                            }
+                        }
+                    },
+                    maxWatchPerIp: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                /*非空提示*/
+                                message: '不能为空'
+                            },
+                            stringLength: {
+                                /*长度提示*/
+                                min: 1,
+                                max: 3,
+                                message: '输入有误, 重新输入'
+                            },
+                            regexp: {//匹配规则
+                                regexp: /^[0-9]*[1-9][0-9]*$/,
+                                message: '输入有误, 重新输入'
+                            }
+                        }
+                    },
+                    alarmJobNums: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: '不能为空'
+                            }
+                        }
+                    },
+                    routeChannelIDs: {
+                        /*键名username和input name值对应*/
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: '不能为空'
+                            }
+                        }
+                    }
+
+                }
+            }).on('success.form.bv', function (e, data) {
+                e.preventDefault();
+
+                // upAlarmSetting
+                var params = $("#defaultForm").serialize();
+                $.post(PageGlobalData.services.upAlarmSetting, params).done(function (resObj) {
+                    $.scojs_message('操作成功', $.scojs_message.TYPE_OK);
+                    $('#upAlarmSettingWIN').modal('hide')
+
+                    var flag = resObj.result;
+                    if (flag) {
+                        loadAlarmSetting();
+                    } else {
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    }
+                }).fail(function (error) {
+                    $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                })
+            });
+
+
+        }).on('hide.bs.modal', function () {
+//            try {
+//                $("#defaultForm").data('bootstrapValidator').destroy();
+//            } catch (e) {
+//            }
+//            $("#upAlarmSettingWIN").find("form")[0].reset();
+        });
+
+
+        /**
+         *  bind events
+         */
+        $('#submitClusterID').click(function () {
+
+            PageGlobalData.clusterID = $(".chosen-select").val();
+            loadAlarmSetting(PageGlobalData.clusterID);
+
+        })
+        $(document).on("click", ".upAlarmSettingBtn", function () {
+
+            $("select[name='alarmJobNums']").val($("#alarmJobNums").val()).trigger("change");
+            $('#upAlarmSettingWIN').modal('show')
+        });
+        $(document).on("click", "#removeAlarmSettingBtn", function () {
+
+            var params = {
+                clusterID: PageGlobalData.clusterID
+            }
+
+            var layIndex = layer.confirm('确定删除？', {
+                btn: ['删除', '取消'] //按钮
+            }, function () {
+
+                $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/alarm/removeAlarmSetting", params).done(function (resObj) {
+
+                    if (resObj.data) {
+                        layer.close(layIndex)
+                        loadAlarmSetting();
+                    } else {
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    }
+
+
+                }).fail(function (error) {
+                    console.log(error)
+                    $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                }).always(function () {
+                });
+            }, function () {
+                // ignore
+            });
+
+        });
+
+
+        /**
+         * 下拉多选框填充选项
+         */
+        $(".js-data-example-ajax").select2({
+
+            ajax: {
+                url: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/system/userQuery",
+                dataType: 'json',
+                delay: 250,
+                type: "POST",
+                data: function (params) {
+                    return {
+                        jobNum: params.term,
+                    };
+                },
+                processResults: function (resObj) {
+
+                    $.each(resObj.data, function (i, v) {
+                        v.id = v.jobNum;
+                    })
+
+                    return {
+                        results: resObj.data
+                    };
+                },
+
+
+            },
+            multiple: true,
+            escapeMarkup: function (markup) {
+                return markup;
+            },
+            minimumInputLength: 5,
+
+            // select 的文字显示
+            templateSelection: function (option) {
+                return option.id + ' ' + option.text;
+            },
+            templateResult: function (repo) {
+
+                if (repo.loading) return '搜索中...'
+
+                var optionH = '<div class="clearfix">' +
+                        '<div class="col-sm-3">' + repo.jobNum + '</div>' +
+                        '<div class="col-sm-3">' + repo.jobName + '</div>' +
+                        '<div class="col-sm-6">' + repo.deptName + '</div>';
+                optionH += '</div>';
+                return optionH;
+            },
+
+            language: "zh-CN"
+        });
+
+
+        /**
+         * functions
+         */
+        // 加载配置
+        function loadAlarmSetting() {
+
+            var _clusterID = PageGlobalData.clusterID;
+            if (CommonUtil.isStringNull(_clusterID)) {
+                return;
+            }
+
+            var params = {clusterID: PageGlobalData.clusterID}
+            $.post(PageGlobalData.services.getAlarmSetting, params).done(function (resObj) {
+                var flag = resObj.result;
+
+                if(!flag){
+                    $.gritter.add({
+                        title: '未配置预警项目, 请先配置 !',
+                        text: '',
+                        image: '',
+                        sticky: false,
+                        time: 2500,
+                        speed:100,
+                        class_name: 'gritter-warning gritter-light'
+                    });
+                }
+
+
+                var setting = resObj.data;
+                setting.clusterID = _clusterID;
+
+                PageGlobalData.jobNumList = setting.jobNumList
+                PageGlobalData.jobNameList = setting.jobNameList
+
+                clusterSettingModeVue.setClusterSettingData(setting);
+                clusterSettingInfoVue.setClusterSettingData(setting)
+
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            }).always(function () {
+            });
+        }
+
+
+        /**
+         *  init datas
+         */
+        $.post(PageGlobalData.services.listZKClusters).done(function (resObj) {
+
+            var dataz = resObj.data;
+            for (var o in dataz) {
+                $(".clusterList").append("<option value='" + dataz[o].clusterID + "'>" + dataz[o].clusterName + "</option>");
+            }
+            $('.chosen-select').chosen();
+
+        }).fail(function (error) {
+            console.log(error)
+            $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+        })
+
+
+    })
+
+    // showErrorMsg('#preprice', '输入的底价不能超过20,000!!')
+    function showErrorMsg(element, content) {
+        layer.tips(content, element, {
+            tips: [3, '#red']
+        });
+    }
+
+
+    $(function () {
+
+    });
+
+</script>

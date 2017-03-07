@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- online ->  org.apache.log4j.varia.NullAppender -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <param name="encoding" value="utf-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p (%t) [ %F:%L -> %M ] %m %n"/>
+        </layout>
+    </appender>
+
+    <!-- info log -->
+    <appender name="info" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="/data/logs/skynet-hotel.ghotel.vip/app/info.log"/>
+        <param name="encoding" value="utf-8"/>
+        <param name="maxFileSize" value="300MB"/>
+        <param name="maxBackupIndex" value="3"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p (%t) [ %F:%L -> %M ] %m %n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="acceptOnMatch" value="true"/> <!-- 设置为true下面的filter就不执行 不过这样性能好 -->
+            <param name="levelMin" value="DEBUG"/>
+            <param name="levelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+    <!-- warning -->
+    <appender name="warn" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="/data/logs/skynet-hotel.ghotel.vip/app/warn.log"/>
+        <param name="encoding" value="utf-8"/>
+        <param name="maxFileSize" value="300MB"/>
+        <param name="maxBackupIndex" value="3"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p (%t) [ %F:%L -> %M ] %m %n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="acceptOnMatch" value="true"/> <!-- 设置为true下面的filter就不执行 不过这样性能好 -->
+            <param name="levelMin" value="WARN"/>
+            <param name="levelMax" value="WARN"/>
+        </filter>
+    </appender>
+
+    <!-- error log -->
+    <appender name="error" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="/data/logs/skynet-hotel.ghotel.vip/app/error.log"/>
+        <param name="encoding" value="utf-8"/>
+        <param name="maxFileSize" value="300MB"/>
+        <param name="maxBackupIndex" value="3"/>
+        <param name="threshold" value="ERROR"/> <!-- 只输出错误以上的日志 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p (%t) [ %F:%L -> %M ] %m %n"/>
+        </layout>
+    </appender>
+
+    <!-- logger -->
+    <logger name="SYSTEM_LOGGER" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="warn"/>
+        <appender-ref ref="error"/>
+    </logger>
+
+    <!-- root -->
+    <root>
+        <priority value="INFO"/>
+
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="warn"/>
+        <appender-ref ref="error"/>
+    </root>
+
+</log4j:configuration>

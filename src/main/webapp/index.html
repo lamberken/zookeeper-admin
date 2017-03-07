@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>登录 Zookeeper Admin</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/css/common.css"/>
+    <script src="assets/js/base/jquery-2.1.3.js"></script>
+    <script src="assets/js/base/jquery.cookie.min.js"></script>
+
+    <script src="assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="assets/js/plugins/ladda/ladda.min.js"></script>
+
+
+    <!-- validator -->
+    <link rel="stylesheet" href="assets/js/plugins/bootstrapValidator/bootstrapValidator.min.css"/>
+    <script src="assets/js/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
+    <script src="assets/js/plugins/bootstrapValidator/zh_CN.js"></script>
+
+    <!-- vue -->
+    <script src="assets/js/plugins/vue/vue.js"></script>
+
+    <!-- common -->
+    <script src="assets/common/utils.js"></script>
+    <link rel="stylesheet" href="assets/common/common.css"/>
+    <script src="assets/common/common.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+
+    <script src="assets/js/base/ace.min.js"></script>
+    <script src="assets/js/base/ace-elements.min.js"></script>
+
+    <style type="text/css">
+        .login-layout {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body class="">
+<div class="main-container login-layout">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div class="center">
+                        <h1>
+                            <i class="ace-icon fa fa-leaf green"></i>
+                            <span class="red">Zookeeper Admin</span>
+                        </h1>
+                    </div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative">
+                        <div id="login-box" class="login-box visible widget-box no-border"
+                             style="background-color: #d0d0d0;">
+                            <div class="widget-body">
+
+                                <div class="widget-main">
+                                    <h4 class="header blue lighter bigger">
+                                        <i class="ace-icon fa fa-coffee green"></i>
+                                        请登录：<small class="red" id="tip"></small>
+                                    </h4>
+
+                                    <div class="space-6"></div>
+
+                                    <form action="#" method="post">
+                                        <fieldset>
+                                            <div class="form-group clearfix">
+                                                <div class="input-group block input-icon input-icon-right">
+                                                    <input name="username" id="username" type="text"
+                                                           class="form-control"
+                                                           placeholder="用户名" required="required"/>
+                                                    <i class="ace-icon fa fa-user"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <div class="input-group block input-icon input-icon-right">
+                                                    <input name="password" type="password" id="password"
+                                                           class="form-control"
+                                                           placeholder="密码" required="required"/>
+                                                    <i class="ace-icon fa fa-lock"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="space"></div>
+
+                                            <div class="form-group clearfix">
+                                                <button class="width-35 pull-right btn btn-sm btn-primary"
+                                                        type="submit">
+                                                    <i class="ace-icon fa fa-key"></i>
+                                                    <span class="bigger-110">登录</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="space-4"></div>
+                                        </fieldset>
+                                    </form>
+
+                                </div><!-- /.widget-main -->
+                            </div><!-- /.widget-body -->
+                        </div><!-- /.login-box -->
+
+                        <div class="center">
+                            <h4 class="blue">&copy;同程网络科技股份有限公司</h4>
+                        </div>
+                    </div><!-- /.position-relative -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script type="text/javascript">
+
+    $(function () {
+        $("form").bootstrapValidator().on('success.field.bv', function (e, data) {
+            var $parent = data.element.parents('.form-group');
+            $parent.removeClass('has-success');
+            $parent.find('.form-control-feedback[data-bv-icon-for="' + data.field + '"]').hide();
+            if (data.bv.getSubmitButton()) {
+                data.bv.disableSubmitButtons(false);
+            }
+            e.preventDefault();
+        }).on('error.field.bv', function (e, data) {
+            if (data.bv.getSubmitButton()) {
+                data.bv.disableSubmitButtons(false);
+            }
+        }).on('success.form.bv', function (e, data) {
+            e.preventDefault();
+
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            var params = {
+                username: username,
+                password: password
+            }
+
+
+            $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/system/login", params).done(function (resObj) {
+                var flag = resObj.result;
+                var username = resObj.data;
+
+                if (flag){
+
+                    // 跳转
+                    var date = new Date();
+                    date.setTime(date.getTime() + 8 * 60 * 60 * 1000); // 8 mins
+                    $.cookie(ZOOKEEPER_WEB_ADMIN_CONFIG.unameKey, username, {path: '/', expires: date});
+                    window.document.location.href = 'admin/index.html'
+
+                    // TODO refferer
+//                    var refferer = document.referrer;
+//
+//                    if (refferer.indexOf("login.html") >= 0) {
+//                        window.document.location.href = "index.html";
+//                    }
+//
+//
+//                    window.document.location.href = (refferer == "" || refferer == window.document.location.href ? "index.html" : document.referrer);
+
+
+                }else {
+                    $("#tip").html("登录失败, 稍后再试")
+                }
+            }).fail(function (error) {
+                $("#tip").html("发生错误, 稍后再试")
+            })
+
+        });
+    })
+
+
+</script>
+
+
+</body>
+</html>

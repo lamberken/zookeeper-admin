@@ -1,0 +1,19 @@
+.login-layout {
+    background-color: #ffffff;
+}
+
+table.dataTable tbody tr.selected {
+    background-color: #b0bed9;
+}
+
+tr.group, tr.group:hover {
+    background-color: #ddd !important;
+}
+
+.hover-form {
+    background-color: #f7f7f7;
+    border: 1px solid #aeaeae;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    padding: 3px;
+    width: 200px;
+}

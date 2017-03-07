@@ -1,0 +1,7 @@
+#git rm -r -f --cached .
+#git add .
+#git commit -m 'update .gitignore'
+
+.idea
+*.iml
+artJava-zookeeper-admin/target/
