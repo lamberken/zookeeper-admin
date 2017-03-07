@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>ZooKeeper Admin</title>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/common.css"/>
+    <script src="../assets/js/base/jquery-2.1.3.js"></script>
+    <script src="../assets/js/base/jquery.cookie.min.js"></script>
+    <script src="../assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- datatable -->
+    <link rel="stylesheet" href="../assets/js/plugins/datatables/dataTables.min.css">
+    <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="../assets/js/plugins/vue/vue.js"></script>
+    <!-- scojs -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- layer -->
+    <link rel="stylesheet" href="../assets/js/plugins/layer/skin/layer.css"/>
+    <script src="../assets/js/plugins/layer/layer.js"></script>
+
+    <!-- common -->
+    <script src="../assets/common/utils.js"></script>
+    <link rel="stylesheet" href="../assets/common/common.css"/>
+    <script src="../assets/common/common.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <script src="../assets/js/base/ace-extra.min.js"></script>
+    <script src="../assets/js/base/ace-elements.min.js"></script>
+    <script src="../assets/js/base/ace.min.js"></script>
+
+
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="index.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf" style="color: #5df910!important"></i>
+                    <b>ZooKeeper Admin</b>
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="../assets/images/system/user.jpg" alt="Jason's Photo"/>
+                        <span class="user-info">
+									您好, <span id="loginUname"></span>
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" id="exitSystemB">
+                                <i class="ace-icon fa fa-power-off"></i>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /.navbar-container -->
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+
+    <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+
+        <ul class="nav nav-list" style="transition-property: top; transition-duration: 0.15s;">
+
+
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text">
+                                集群管理
+                            </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="active">
+                        <a href="manager_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群配置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_nodes.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 节点信息
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_status.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_machines.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 机器状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-gavel"></i>
+                    <span class="menu-text"> 集群监控 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="alarm_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            报警设置
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-cogs"></i>
+                    <span class="menu-text"> 系统设置 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                    <li class="">
+                        <a href="system_cluster_about.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            关于
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-graduation-cap"></i>
+                    <span class="menu-text"> 文档学习 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="keeper_cluster_study.html">
+                            <i class="menu-icon fa fa-angghnle-right"></i> ZooKeeper 分布式
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+        </ul><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--<div class="hr hr32 hr-dotted"></div>-->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent">
+
+                                    <div class="widget-header widget-header-flat">
+                                        <h3 class="header smaller lighter black"><i
+                                                class="ace-icon glyphicon glyphicon-align-justify"></i>&nbsp;集群列表
+                                            &nbsp;&nbsp;
+                                            <button class="btn btn-sm btn-success" id="addZKClusterBtn">
+                                                <i class="ace-icon ace-icon fa fa-plus"></i>
+                                                <b>添加集群</b>
+                                            </button>
+                                        </h3>
+                                    </div>
+
+                                    <div class="widget-body">
+
+                                        <!--<div class="widget-main no-padding">-->
+                                        <table id="clusterDatasT" class="table table-striped table-bordered"
+                                               cellspacing="0">
+                                            <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th>集群名称</th>
+                                                <th>集群地址</th>
+                                                <th>集群描述</th>
+                                                <th>集群操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <template v-for='clusterData in clusterDatas'>
+                                                <tr :clusterID="clusterData.clusterID">
+                                                    <td>{{clusterData.clusterName}}</td>
+                                                    <td>{{clusterData.serverList}}</td>
+                                                    <td>{{clusterData.description}}</td>
+                                                    <td>
+                                                        <a class="editCluster" href="javascript:;">编辑</a>
+                                                        <a class="removeCluster" href="javascript:;">删除</a>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                            </tbody>
+                                        </table>
+                                        <!--</div>&lt;!&ndash; /.widget-main &ndash;&gt;-->
+                                    </div><!-- /.widget-body -->
+
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+                            <div>
+                                <div class="modal fade" id="addZKClusterWIN" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width: 780px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">
+                                                    <b> ZK 集群</b>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="form-horizontal" role="form">
+
+                                                    <input type="text" v-model='clusterData.clusterID' class="hidden"/>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"
+                                                               for="name">集群名称</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="name"
+                                                                   class="col-xs-10 col-sm-5"
+                                                                   v-model='clusterData.clusterName'/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"
+                                                               for="servers">集群地址</label>
+
+                                                        <div class="col-sm-9">
+                                                            <textarea id="servers"
+                                                                      class="autosize-transition form-control"
+                                                                      style="max-width: 500px;min-height: 50px"
+                                                                      v-model='clusterData.serverList'
+                                                                      placeholder="127.0.0.1:2181,127.0.0.2:2181"
+                                                                      data-toggle="tooltip" data-html="true"
+                                                                      title="英文逗号分隔">
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"
+                                                               for="desc">集群描述</label>
+
+                                                        <div class="col-sm-9">
+                                                                <textarea id="desc"
+                                                                          class="autosize-transition form-control"
+                                                                          style="max-width: 500px;min-height: 50px"
+                                                                          v-model='clusterData.description'>
+
+                                                                </textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                        id="closeZKClusterWIN">
+                                                    关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary ladda-button"
+                                                        data-style="zoom-out" id="addCluster">
+                                                    添加
+                                                </button>
+
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+
+                                </div>
+                            </div>
+                        </div><!-- /.row -->
+
+                        <div class="hr hr32 hr-dotted"></div>
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    /**
+     *  gloal data
+     *
+     */
+    var globalData = {};
+
+
+    $(document).ready(function () {
+
+        /**
+         *  vues
+         */
+        var clusterDatasVue = new Vue({
+            el: '#clusterDatasT',
+            data: {
+                clusterDatas: []
+            },
+            methods: {
+                showClusterData: function () {
+                    var _that = this;
+                    $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/listZKClusters").done(function (resObj) {
+
+                        // console.log(_that.clusterDatas)
+                        _that.clusterDatas.splice(0, _that.clusterDatas.length);
+
+                        console.log(_that.clusterDatas)
+                        console.log(resObj.data)
+                        _that.clusterDatas = resObj.data;
+
+
+                    }).fail(function (error) {
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    })
+                }
+            }
+        })
+
+        var addZKClusterWINVue = new Vue({
+            el: '#addZKClusterWIN',
+            data: {
+                clusterData: {
+                    clusterID: '',
+                    clusterName: '',
+                    serverList: '',
+                    description: ''
+                }
+            },
+            methods: {
+                addClusterData: function () {
+
+                },
+                setClusterData: function (id, name, serList, desc) {
+                    this.clusterData.clusterID = id;
+                    this.clusterData.clusterName = name;
+                    this.clusterData.serverList = serList;
+                    this.clusterData.description = desc;
+                },
+                clearClusterData: function () {
+                    this.clusterData = {
+                        clusterID: '',
+                        clusterName: '',
+                        serverList: '',
+                        description: ''
+                    }
+                }
+            }
+        })
+
+
+        /**
+         * modals
+         * */
+        $('#addZKClusterWIN').on('shown.bs.modal', function () {
+            $("[data-toggle='tooltip']").tooltip();
+        }).on('hide.bs.modal', function () {
+            addZKClusterWINVue.clearClusterData()
+            $("#addZKClusterWIN").find("form")[0].reset();
+        });
+
+        /**
+         *  bind events
+         */
+        $(document).on("click", "#addZKClusterBtn", function () {
+            $('#addZKClusterWIN').modal('show')
+        });
+        $(document).on("click", ".editCluster", function () {
+
+            var id = $(this).closest("tr").attr("clusterID")
+            var name = $(this).closest("tr").children("td").eq(0).html();
+            var serList = $(this).closest("tr").children("td").eq(1).html();
+            var desc = $(this).closest("tr").children("td").eq(2).html();
+
+            addZKClusterWINVue.setClusterData(id, name, serList, desc);
+
+            $('#addZKClusterWIN').modal('show')
+        });
+        $(document).on("click", ".removeCluster", function () {
+
+            var id = $(this).closest("tr").attr("clusterID")
+            var params = {
+                clusterID: id
+            }
+
+            var layIndex = layer.confirm('确定删除？', {
+                btn: ['删除', '取消'] //按钮
+            }, function () {
+
+                $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/removeZKCluster", params).done(function (resObj) {
+
+                    if (resObj.data) {
+                        layer.close(layIndex)
+                        clusterDatasVue.showClusterData();
+                    } else {
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    }
+
+
+                }).fail(function (error) {
+                    console.log(error)
+                    $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                }).always(function () {
+                });
+
+
+            }, function () {
+//                layer.msg('也可以这样', {
+//                    time: 20000, //20s后自动关闭
+//                    btn: ['明白了', '知道了']
+//                });
+            });
+
+        });
+
+        $("#addCluster").off().on("click", function () {
+            $("#closeZKClusterWIN").prop("disabled", "disabled");
+
+            var clusterData = addZKClusterWINVue.clusterData;
+            var clusterID = clusterData.clusterID;
+            var clusterName = clusterData.clusterName;
+            var serverList = clusterData.serverList;
+            var description = clusterData.description;
+
+            console.log(CommonUtil.isStringNull(clusterName))
+
+            if (CommonUtil.isStringNull(clusterName)) {
+                showErrorMsg("#name", '填写集群名称')
+                $("#closeZKClusterWIN").prop("disabled", false);
+                return;
+            }
+
+            if (!checkServerList(serverList)) {
+                $("#closeZKClusterWIN").prop("disabled", false);
+                return;
+            }
+
+            var ladda = Ladda.create(this);
+            ladda.start();
+
+            $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/addZKCluster", clusterData).done(function (data) {
+                $.scojs_message('操作成功', $.scojs_message.TYPE_OK);
+
+                clusterDatasVue.showClusterData();
+                $('#addZKClusterWIN').modal('hide')
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            }).always(function () {
+                ladda.stop();
+            });
+        })
+
+
+        /**
+         *  init list
+         */
+        clusterDatasVue.showClusterData();
+
+    });
+
+    function checkServerList(serverList) {
+
+        var patrn = /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9]):[1-9][0-9]*$/;
+
+        var ipArray = serverList.split(",");
+
+        var invalidIpIndex = 0;
+        for (var ipIndex in ipArray) {
+            var anIp = ipArray[ipIndex];
+            invalidIpIndex++;
+            if (!patrn.exec(anIp)) {
+                // window.alert('第' + invalidIpIndex + '个地址不正确!');
+                showErrorMsg("#servers", '第' + invalidIpIndex + '个地址不正确!')
+                return false;
+            }
+            var ipPort = anIp.split(":");
+            if (!ipPort[1] || ipPort[1] > 65535) {
+                // window.alert('第' + invalidIpIndex + '个地址端口不正确!');
+                showErrorMsg("#servers", '第' + invalidIpIndex + '个地址端口不正确!')
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    // showErrorMsg('#preprice', '输入的底价不能超过20,000!!')
+
+    function showErrorMsg(element, content) {
+        layer.tips(content, element, {
+            tips: [3, '#red']
+        });
+    }
+
+</script>
+</body>
+</html>

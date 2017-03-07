@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>jOrgChart - A jQuery OrgChart Plugin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
+  
+    <!-- jQuery includes -->
+    <script type="text/javascript" src="jquery.2.1.1.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    
+    <script src="jquery.jOrgChart.js"></script>
+
+    <script>
+    jQuery(document).ready(function() {
+        $("#org").jOrgChart({
+            chartElement : '#chart',
+            dragAndDrop  : false
+        });
+    });
+    </script>
+  </head>
+
+  <body>
+    
+   
+    
+              <ul id="org" style="display:none">
+            <li>
+               Food
+               <ul>
+                 <li id="beer">
+                    <div style="background: red" id="rrrr">dddd</div>
+
+                    <button onclick="javascript:alert(123)">234</button>
+
+                 </li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li id="beer">Beer</li>
+                 <li>Vegetables
+                   <a href="http://wesnolte.com" target="_blank">Click me</a>
+                   <ul>
+                     <li>Pumpkin</li>
+                     <li>
+                        <a href="http://tquila.com" target="_blank">Aubergine</a>
+                        <p>A link and paragraph is all we need.</p>
+                     </li>
+                   </ul>
+                 </li>
+                 
+               </ul>
+             </li>
+           </ul>  
+    
+    <div id="chart" class="orgChart">
+        
+    </div>
+    
+    
+
+</body>
+</html>

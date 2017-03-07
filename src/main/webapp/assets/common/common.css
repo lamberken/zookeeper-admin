@@ -1,0 +1,61 @@
+.fa-folder-yellow {
+    color: #dfba49 !important;
+}
+
+.jstree-open > .jstree-anchor > .fa-folder:before {
+    margin-left: 2px !important;
+    content: "\f07c" !important;
+}
+
+.user-info {
+    line-height: 29px !important;
+}
+
+/*
+* org charts
+*/
+#org {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Custom chart styling */
+.jOrgChart {
+    margin: 10px;
+    padding: 2px;
+}
+
+/* Custom node styling */
+
+.jOrgChart .top {
+    border-top: 2px solid black;
+}
+
+.jOrgChart .line {
+    height: 20px;
+    width: 2px;
+}
+
+.jOrgChart table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.jOrgChart .node {
+    width: 120px;
+    height: 72px;
+    padding: 0 0px;
+    font-size: 11px;
+    background-color: #d6e9c6;
+    border: 1px solid white;
+    color: #423a34;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.jOrgChart .nodeInfo {
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 3px;
+}

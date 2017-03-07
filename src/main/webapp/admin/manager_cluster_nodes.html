@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>ZooKeeper Admin</title>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/common.css"/>
+    <script src="../assets/js/base/jquery-2.1.3.js"></script>
+    <script src="../assets/js/base/jquery.cookie.min.js"></script>
+    <script src="../assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- datatable -->
+    <link rel="stylesheet" href="../assets/js/plugins/datatables/dataTables.min.css">
+    <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- chosen -->
+    <link rel="stylesheet" href="../assets/css/chosen.min.css"/>
+    <script src="../assets/js/base/chosen.jquery.min.js"></script>
+
+    <!-- common -->
+    <script src="../assets/common/utils.js"></script>
+    <link rel="stylesheet" href="../assets/common/common.css"/>
+    <script src="../assets/common/common.js"></script>
+    <!-- jstree -->
+    <link rel="stylesheet" href="../assets/js/plugins/jstree/dist/themes/default/style.min.css"/>
+    <script src="../assets/js/plugins/jstree/dist/jstree.min.js"></script>
+
+    <!-- mustache -->
+    <script src="../assets/js/plugins/mustache/mustache.js"></script>
+    <script src="../assets/js/plugins/vue/vue.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <script src="../assets/js/base/ace-extra.min.js"></script>
+    <script src="../assets/js/base/ace-elements.min.js"></script>
+    <script src="../assets/js/base/ace.min.js"></script>
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+            <a href="index.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf" style="color: #5df910!important"></i>
+                    <b>ZooKeeper Admin</b>
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="../assets/images/system/user.jpg" alt="Jason's Photo"/>
+                        <span class="user-info">
+                                   您好, <span id="loginUname"></span>
+                                </span>
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" id="exitSystemB">
+                                <i class="ace-icon fa fa-power-off"></i> 登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.navbar-container -->
+</div>
+<div class="main-container ace-save-state" id="main-container">
+    <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+        <!--<script type="text/javascript">-->
+        <!--try {-->
+        <!--ace.settings.check('sidebar', 'fixed')-->
+        <!--} catch (e) {-->
+        <!--}-->
+        <!--</script>-->
+        <ul class="nav nav-list" style="transition-property: top; transition-duration: 0.15s;">
+            <!--<li class="">-->
+            <!--<a href="index.html">-->
+            <!--<i class="menu-icon fa fa-home"></i>-->
+            <!--<span class="menu-text"> 控制台 </span>-->
+            <!--</a>-->
+            <!--<b class="arrow"></b>-->
+            <!--</li>-->
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text">
+                                集群管理
+                            </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="manager_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群配置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="active">
+                        <a href="manager_cluster_nodes.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 节点信息
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_status.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_machines.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 机器状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-gavel"></i>
+                    <span class="menu-text"> 集群监控 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="alarm_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            报警设置
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-cogs"></i>
+                    <span class="menu-text"> 系统设置 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="system_cluster_about.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 关于
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-graduation-cap"></i>
+                    <span class="menu-text"> 文档学习 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="keeper_cluster_study.html">
+                            <i class="menu-icon fa fa-angghnle-right"></i> ZooKeeper 分布式
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /.nav-list -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--<div class="hr hr32 hr-dotted"></div>-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent">
+                                    <div class="widget-header widget-header-flat"
+                                         style="border-bottom: 0px solid #DCE8F1;">
+                                        <h3 class="header smaller lighter black"><i
+                                                class="ace-icon glyphicon glyphicon-align-justify"></i>&nbsp;节点信息
+                                            &nbsp;&nbsp;
+                                        </h3>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="row">
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label no-padding-right"
+                                                           for="clusterList"> 选择集群 </label>
+                                                    <div class="col-sm-2">
+                                                        <select class="chosen-select form-control clusterList"
+                                                                id="clusterList"
+                                                                data-placeholder="请选择...">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button class="btn btn-info btn-sm" type="button"
+                                                                id="submitClusterID">
+                                                            选择
+                                                        </button>
+                                                        <!--&nbsp;-->
+                                                        <!--<span class="help-inline">-->
+                                                           <!--<span class="label label-sm">当前集群</span>-->
+                                                        <!--</span>-->
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="hr hr-dotted hr-8"></div>
+                                            </form>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="widget-box transparent">
+                                                    <div class="widget-header widget-header-flat">
+                                                        <h4 class="widget-title lighter">
+                                                            <i class="ace-icon fa fa-folder-open-o"></i>节点树
+                                                        </h4>
+                                                    </div>
+                                                    <div class="widget-body">
+                                                        <div class="widget-main no-padding">
+                                                            <div style="padding-left: 5px; margin-top: 8px">
+                                                                <li style="list-style-type:none"><i
+                                                                        class="fa fa fa-sitemap"></i> /
+                                                                </li>
+                                                            </div>
+                                                            <div id="nodeTree" class="demo"></div>
+                                                        </div>
+                                                        <!-- /.widget-main -->
+                                                    </div>
+                                                    <!-- /.widget-body -->
+                                                </div>
+                                                <!-- /.widget-box -->
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-8">
+                                                <!--<div class="widget-box transparent" style="position: fixed; top: 45px; z-index: 1030;">-->
+                                                <div class="widget-box transparent">
+                                                    <div class="widget-header widget-header-flat">
+                                                        <h4 class="widget-title lighter">
+                                                            <i class="ace-icon glyphicon glyphicon-th"></i>
+                                                            节点数据
+                                                        </h4>
+                                                    </div>
+                                                    <div class="widget-body">
+                                                        <div class="widget-box transparent" id="-box">
+                                                            <div class="widget-header" style="border-bottom:0px">
+                                                                <ul class="nav nav-tabs" id="recent-tab">
+                                                                    <li class="active">
+                                                                        <a data-toggle="tab" href="#stat-tab">元数据</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a data-toggle="tab" href="#aclTab">权限信息</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a data-toggle="tab"
+                                                                           href="#comment-tab">节点值</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main padding-4">
+                                                                    <div class="tab-content" style="padding: 0px 0px;">
+                                                                        <div id="stat-tab" class="tab-pane active">
+                                                                            <table class="table table-hover table-striped table-bordered">
+                                                                                <tr>
+                                                                                    <th width="15%">名称</th>
+                                                                                    <th width="60%">含义</th>
+                                                                                    <th width="40%">数值</th>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>cZxid</td>
+                                                                                    <td>节点创建时的zxid</td>
+                                                                                    <td>{{NODE_STAT_CZXID}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>mZxid</td>
+                                                                                    <td>节点最新一次更新发生时的zxid</td>
+                                                                                    <td>{{NODE_STAT_MZXID}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>pZxid</td>
+                                                                                    <td>pZxid</td>
+                                                                                    <td>{{NODE_STAT_PZXID}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>cversion</td>
+                                                                                    <td>其子节点的更新次数</td>
+                                                                                    <td>{{NODE_STAT_C_VERSION}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>dataVersion</td>
+                                                                                    <td>节点数据的更新次数</td>
+                                                                                    <td>{{NODE_STAT_DATA_VERSION}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>aclVersion</td>
+                                                                                    <td>节点ACL(授权信息)的更新次数</td>
+                                                                                    <td>{{NODE_STAT_ACL_VERSION}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>ephemeralOwner</td>
+                                                                                    <td>
+                                                                                        表示与该节点绑定的sessionid如果该节点不是ephemeral节点,ephemeralOwner值为0
+                                                                                    </td>
+                                                                                    <td>{{NODE_STAT_EPHEMERAL_OWNER}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>dataLength</td>
+                                                                                    <td>节点数据的字节数</td>
+                                                                                    <td>{{NODE_STAT_DATA_LENGTH}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>numChildren</td>
+                                                                                    <td>子节点个数</td>
+                                                                                    <td>{{NODE_STAT_NUM_CHILDREN}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>mtime</td>
+                                                                                    <td>节点最新一次更新发生时的时间戳</td>
+                                                                                    <td>{{NODE_STAT_M_TIME |
+                                                                                        timestamp}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>ctime</td>
+                                                                                    <td>节点创建时的时间戳</td>
+                                                                                    <td>{{NODE_STAT_C_TIME |
+                                                                                        timestamp}}
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+                                                                        </div>
+                                                                        <div id="aclTab" class="tab-pane">
+
+                                                                            <div class="well" v-for="acl in acls"
+                                                                                 style="padding: 8px;margin-bottom: 8px;">
+                                                                                <span style="font-weight: bold;width: 82px;display:inline-block">ACL_SCHEME</span>
+                                                                                <span style="display:inline-block;margin-left: 5px">{{acl.ACL_SCHEME}}</span>
+                                                                                <br>
+                                                                                <span style="font-weight: bold;width: 82px;display:inline-block">ACL_ID</span>
+                                                                                <span style="display:inline-block;margin-left: 5px">{{acl.ACL_ID}}</span>
+                                                                                <br>
+                                                                                <span style="font-weight: bold;width: 82px;display:inline-block">ACL_PERMS</span>
+                                                                                <span style="display:inline-block;margin-left: 5px">{{acl.ACL_PERMS}}</span>
+                                                                            </div>
+
+                                                                            <div class="hr"></div>
+
+                                                                        </div>
+                                                                        <!-- /.#member-tab -->
+                                                                        <div id="comment-tab" class="tab-pane">
+                                                                            <div class="well"
+                                                                                 style="padding: 8px;margin-bottom: 8px;"
+                                                                                 id="nodeData">
+
+                                                                            </div>
+                                                                            <div class="hr"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.widget-main -->
+                                                            </div>
+                                                            <!-- /.widget-body -->
+                                                        </div>
+                                                        <!-- /.widget-box -->
+                                                    </div>
+                                                    <!-- /.widget-body -->
+                                                </div>
+                                                <!-- /.widget-box -->
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <!-- /.row -->
+                                        <!--</div>&lt;!&ndash; /.widget-main &ndash;&gt;-->
+                                    </div>
+
+                                </div>
+                                <!-- /.widget-box -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <div class="hr hr32 hr-dotted"></div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+    </div>
+    <!-- /.main-content -->
+</div>
+<!-- /.main-container -->
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/listZKClusters").done(function (resObj) {
+
+            var dataz = resObj.data;
+            for (var o in dataz) {
+                $(".clusterList").append("<option value='" + dataz[o].clusterID + "'>" + dataz[o].clusterName + "</option>");
+            }
+            $('.chosen-select').chosen();
+
+        }).fail(function (error) {
+            $.scojs_message(error.responseText, $.scojs_message.TYPE_ERROR, 40000);
+        })
+
+
+        /**
+         *  TODO 考虑 jstree 的销毁与重用
+         */
+        var metaData = {
+            // stat
+            NODE_STAT_ACL_VERSION: '',
+            NODE_STAT_C_TIME: '',
+            NODE_STAT_C_VERSION: '',
+            NODE_STAT_CZXID: '',
+            NODE_STAT_DATA_LENGTH: '',
+            NODE_STAT_EPHEMERAL_OWNER: '',
+            NODE_STAT_M_TIME: '',
+            NODE_STAT_MZXID: '',
+            NODE_STAT_NUM_CHILDREN: '',
+            NODE_STAT_PZXID: '',
+            NODE_STAT_DATA_VERSION: ''
+        }
+
+        new Vue({
+            el: '#stat-tab',
+            data: metaData
+        })
+
+        $('#submitClusterID').click(function () {
+            $.jstree.destroy("#nodeTree")
+            $('#nodeTree').jstree({
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder fa-folder-yellow bigger-125"
+                    },
+                    "file": {
+                        "icon": "ace-icon glyphicon glyphicon-file fa-folder-yellow bigger-120"
+                    }
+                },
+                "core": {
+                    "check_callback": true,
+                    'data': function (node, callback) {
+
+                        var params = {};
+                        params["pid"] = node.id == '#' ? '/' : node.id;
+                        params["clusterID"] = $(".chosen-select").val();
+
+                        $.ajax({
+                            type: "POST",
+                            data: params,
+                            url: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + '/node/getNodePaths',
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                callback.call(this, result.data);
+                            }
+                        });
+                    }
+                },
+                "plugins": ["types", "themes", "json_data", "ui", "crrm"]
+            }).delegate("a", "click", function (event, data) {
+                event.preventDefault();
+            }).bind('select_node.jstree', function (e, data) {
+
+                var nodePath = data.node.id;
+                var params = {}
+                params["clusterID"] = $(".chosen-select").val();
+                params["nodePath"] = nodePath;
+
+                // stat
+                $.ajax({
+                    type: "POST",
+                    data: params,
+                    url: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + '/node/getNodeStat',
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        $.extend(true, metaData, result.data);
+                    }
+                });
+
+                // acl
+                aclTabVue.showAclDatas(params);
+
+                // data
+                $.ajax({
+                    type: "POST",
+                    data: params,
+                    url: ZOOKEEPER_WEB_ADMIN_CONFIG.domain + '/node/getNodeData',
+                    dataType: "json",
+                    async: false,
+                    success: function (resObj) {
+                        $("#nodeData").html(resObj.data)
+                    }
+                });
+
+            })
+        })
+
+        var aclTabVue = new Vue({
+            el: '#aclTab',
+            data: {
+                acls: [
+                    {
+                        ACL_SCHEME: 'digest',
+                        ACL_ID: 'user1:XDkd2dsEuhc9ImU3q8pa8UOdtpI=',
+                        ACL_PERMS: 'Read Create Delete'
+                    }
+                    , {
+                        ACL_SCHEME: 'digest',
+                        ACL_ID: 'user1:XDkd2dsEuhc9ImU3q8pa8UOdtpI=',
+                        ACL_PERMS: 'Read Create Delete'
+                    }
+                ]
+            },
+            methods: {
+                showAclDatas: function (params) {
+                    var _that = this;
+
+                    $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/node/getNodeACLs", params).done(function (resObj) {
+                        _that.acls = resObj.data;
+                    }).fail(function (error) {
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    });
+                    //this.connDetails = data;
+                },
+                clearAclDatas: function () {
+                    this.acls.splice(0, this.acls.length);
+                }
+            }
+        })
+
+
+    })
+</script>
+</body>
+
+</html>

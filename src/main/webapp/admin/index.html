@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>ZooKeeper Admin</title>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/common.css"/>
+    <script src="../assets/js/base/jquery-2.1.3.js"></script>
+    <script src="../assets/js/base/jquery.cookie.min.js"></script>
+    <script src="../assets/js/base/jquery-ui.min.js"></script>
+
+    <script src="../assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- datatable -->
+    <link rel="stylesheet" href="../assets/js/plugins/datatables/dataTables.min.css">
+    <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- chosen -->
+    <link rel="stylesheet" href="../assets/css/chosen.min.css"/>
+    <script src="../assets/js/base/chosen.jquery.min.js"></script>
+
+    <!-- jstree -->
+    <link rel="stylesheet" href="../assets/js/plugins/jstree/dist/themes/default/style.min.css"/>
+    <script src="../assets/js/plugins/jstree/dist/jstree.min.js"></script>
+
+    <!-- echart -->
+    <script src="../assets/js/plugins/echarts/echarts3.3.3.js"></script>
+
+    <!-- vue -->
+    <script src="../assets/js/plugins/vue/vue.js"></script>
+
+    <!-- org chart -->
+    <link rel="stylesheet" href="../assets/js/plugins/vertical/jOrgChart/dist/jquery.jOrgChart.css"/>
+    <script src="../assets/js/plugins/vertical/jOrgChart/dist/jquery.jOrgChart.js"></script>
+
+    <!-- common -->
+    <script src="../assets/common/utils.js"></script>
+    <script src="../assets/common/common.js"></script>
+    <link rel="stylesheet" href="../assets/common/common.css"/>
+
+    <script src="scripts/manager_cluster_status.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <script src="../assets/js/base/ace-extra.min.js"></script>
+    <script src="../assets/js/base/ace-elements.min.js"></script>
+    <script src="../assets/js/base/ace.min.js"></script>
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="index.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf" style="color: #5df910!important"></i>
+                    <b>ZooKeeper Admin</b>
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="../assets/images/system/user.jpg" alt="Jason's Photo"/>
+                        <span class="user-info">
+									您好, <span id="loginUname"></span>
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" id="exitSystemB">
+                                <i class="ace-icon fa fa-power-off"></i>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div><!-- /.navbar-container -->
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+
+    <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+
+        <ul class="nav nav-list" style="transition-property: top; transition-duration: 0.15s;">
+
+
+            <!--<li class="active open">-->
+            <!--<a href="index.html">-->
+            <!--<i class="menu-icon fa fa-home"></i>-->
+            <!--<span class="menu-text"> 控制台 </span>-->
+            <!--</a>-->
+            <!--<b class="arrow"></b>-->
+            <!--</li>-->
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text">
+                                集群管理
+                            </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="manager_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群配置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_nodes.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 节点信息
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_status.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_machines.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 机器状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-gavel"></i>
+                    <span class="menu-text"> 集群监控 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="alarm_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            报警设置
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-cogs"></i>
+                    <span class="menu-text"> 系统设置 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="system_cluster_about.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 关于
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-graduation-cap"></i>
+                    <span class="menu-text"> 文档学习 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="keeper_cluster_study.html">
+                            <i class="menu-icon fa fa-angghnle-right"></i> ZooKeeper 分布式
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+
+            <div class="page-content">
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="error-container">
+                            <div class="well" style="min-height: 660px;">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <h1 class="grey lighter smaller">
+                                    <span class="blue bigger-125">
+                                        <i class="ace-icon fa fa-sitemap"></i>
+                                        欢迎登陆 Zookeeper Admin
+                                    </span>
+                                        </h1>
+
+                                        <h2 class="lighter smaller"> Zookeeper Admin 简介</h2>
+                                        <p>
+                                            Hadoop、Storm、Kafka、Hbase等大数据集群组件使用越来越多，依赖Zookeeper进行工作，自然而然Zookeeper的维护工作尤为重要！！
+                                        </p>
+                                        <p>
+                                            Zookeeper在大数据生态圈中举足轻重，而，针对Zookeeper集群的监控工具相对较少或者监控比较片面。
+                                        </p>
+                                        <p>
+                                            基于此，Zookeeper Admin应运而生！！
+                                        </p>
+                                        <br>
+                                        <h2 class="lighter smaller"> 重点功能特性 </h2>
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                <strong>集群配置</strong> &nbsp;支持多Zookeeper集群配置，动态增减监控集群
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                <strong>节点信息</strong> &nbsp;方便查询znode的 meta信息、acl信息及data值
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                <strong>集群状态</strong> &nbsp;集群状态一目了然，可视化显示集群中各服务器的实时状态，以及事物处理量等
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                <strong>监控方面</strong> &nbsp;实时监控预警，针对集群，可自定义设置监控项目，配置预警级别（微信、短信、邮件、电话）
+                                            </li>
+                                        </ul>
+                                        <br>
+                                        <h2 class="lighter smaller">最新版本信息</h2>
+
+                                        <h4 class="lighter smaller" style="font-weight: bold;">2017年02月19日 V1.1</h4>
+                                        <p>
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                第一版上线，功能完善中
+                                            </li>
+                                        </ul>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-xs-3" style="padding-top: 36px;">
+                                        <img src="../assets/images/system/keeper.png" style="width:100%;height:100%;">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+
+                    <!-- /.col -->
+                </div>
+
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+</body>
+</html>

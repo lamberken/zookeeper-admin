@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>ZooKeeper Admin</title>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../assets/images/system/favicon.ico"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/common.css"/>
+    <script src="../assets/js/base/jquery-2.1.3.js"></script>
+    <script src="../assets/js/base/jquery.cookie.min.js"></script>
+    <script src="../assets/js/base/jquery-ui.min.js"></script>
+
+    <script src="../assets/js/base/bootstrap.min.js"></script>
+    <!-- sco -->
+    <link rel="stylesheet" href="../assets/js/plugins/scojs/css/sco.message.css"/>
+    <link rel="stylesheet" href="../assets/js/plugins/ladda/ladda-themeless.min.css">
+    <script src="../assets/js/plugins/scojs/js/sco.message.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.confirm.js"></script>
+    <script src="../assets/js/plugins/scojs/js/sco.modal.js"></script>
+    <!-- ladda -->
+    <script src="../assets/js/plugins/ladda/spin.min.js"></script>
+    <script src="../assets/js/plugins/ladda/ladda.min.js"></script>
+    <!-- datatable -->
+    <link rel="stylesheet" href="../assets/js/plugins/datatables/dataTables.min.css">
+    <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- chosen -->
+    <link rel="stylesheet" href="../assets/css/chosen.min.css"/>
+    <script src="../assets/js/base/chosen.jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../assets/js/plugins/layer/skin/layer.css"/>
+    <script src="../assets/js/plugins/layer/layer.js"></script>
+
+    <!-- jstree -->
+    <link rel="stylesheet" href="../assets/js/plugins/jstree/dist/themes/default/style.min.css"/>
+    <script src="../assets/js/plugins/jstree/dist/jstree.min.js"></script>
+
+    <!-- echart -->
+    <script src="../assets/js/plugins/echarts/echarts3.3.3.js"></script>
+
+    <!-- vue -->
+    <script src="../assets/js/plugins/vue/vue.js"></script>
+
+    <!-- org chart -->
+    <link rel="stylesheet" href="../assets/js/plugins/vertical/jOrgChart/dist/jquery.jOrgChart.css"/>
+    <script src="../assets/js/plugins/vertical/jOrgChart/dist/jquery.jOrgChart.js"></script>
+
+    <!-- common -->
+    <script src="../assets/common/utils.js"></script>
+    <link rel="stylesheet" href="../assets/common/common.css"/>
+    <script src="../assets/common/common.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="../assets/js/base/fuelux.tree.min.js"></script>
+    <script src="scripts/manager_cluster_status.js"></script>
+
+    <!-- ace -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <script src="../assets/js/base/ace-extra.min.js"></script>
+    <script src="../assets/js/base/ace-elements.min.js"></script>
+    <script src="../assets/js/base/ace.min.js"></script>
+
+
+    <style>
+        .nav-tabs > li {
+            margin-right: 3px;
+        }
+
+        .spaced > li {
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        #showClustersWIN .alert-danger td {
+            padding: 3px;
+        }
+
+        #commondContent {
+            font-size: 14px;
+            min-height: 450px;
+            border: 1px #e5e5e5 solid;
+            /*padding: 2px;*/
+            /*padding-left: 4px;*/
+
+            /*overflow-y: auto;*/
+            /*word-break: break-all;*/
+            /*word-wrap: break-word;*/
+            /*-webkit-border-radius: 2px;*/
+            /*-moz-border-radius: 2px;*/
+        }
+
+        /*.nav-tabs > li > a, .nav-tabs > li > a:focus {*/
+        /*cursor: pointer;*/
+        /*border-bottom: 0px !important;*/
+
+    </style>
+
+    <style id="term-style">
+        .terminal {
+            float: left;
+            width: 800px;
+            border: #000000 solid 5px;
+            font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+            font-size: 11px;
+            color: #f0f0f0;
+            background: #000000;
+            /*word-wrap: break-word;*/
+        }
+
+        .terminal-cursor {
+            color: #000000;
+            background: #f0f0f0;
+        }
+    </style>
+
+</head>
+
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <!--<nav class="navbar navbar-default navbar-fixed-top" role="navigation">-->
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+            <a href="index.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf" style="color: #5df910!important"></i>
+                    <b>ZooKeeper Admin</b>
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="../assets/images/system/user.jpg" alt="Jason's Photo"/>
+                        <span class="user-info">
+                                    您好, <span id="loginUname"></span>
+                                </span>
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" id="exitSystemB">
+                                <i class="ace-icon fa fa-power-off"></i> 登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.navbar-container -->
+</div>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="sidebar responsive sidebar-fixed" id="sidebar" data-sidebar="true" data-sidebar-scroll="true"
+         data-sidebar-hover="true">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('sidebar', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="nav nav-list" style="transition-property: top; transition-duration: 0.15s;" id="nav-list">
+
+            <!--<li class="">-->
+            <!--<a href="index.html">-->
+            <!--<i class="menu-icon fa fa-home"></i>-->
+            <!--<span class="menu-text"> 控制台 </span>-->
+            <!--</a>-->
+            <!--<b class="arrow"></b>-->
+            <!--</li>-->
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text">
+                                集群管理
+                            </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="manager_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群配置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_nodes.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 节点信息
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="active">
+                        <a href="manager_cluster_status.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 集群状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="manager_cluster_machines.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 机器状态
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-gavel"></i>
+                    <span class="menu-text"> 集群监控 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="alarm_cluster_settings.html">
+                            <i class="menu-icon fa fa-angle-right"></i>
+                            报警设置
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-cogs"></i>
+                    <span class="menu-text"> 系统设置 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="system_cluster_about.html">
+                            <i class="menu-icon fa fa-angle-right"></i> 关于
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-graduation-cap"></i>
+                    <span class="menu-text"> 文档学习 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="keeper_cluster_study.html">
+                            <i class="menu-icon fa fa-angghnle-right"></i> ZooKeeper 分布式
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /.nav-list -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-flat"
+                                 style="border-bottom: 0px solid #DCE8F1;">
+                                <h3 class="header smaller lighter black"><i
+                                        class="ace-icon glyphicon glyphicon-align-justify"></i>&nbsp;集群状态
+                                    &nbsp;&nbsp;
+                                </h3>
+                            </div>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right"
+                                                   for="clusterList"> 选择集群 </label>
+                                            <div class="col-sm-2">
+                                                <select class="chosen-select form-control clusterList"
+                                                        id="clusterList"
+                                                        data-placeholder="请选择...">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-info btn-sm" type="button"
+                                                        id="submitClusterID">
+                                                    选择
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="hr hr-dotted hr-8"></div>
+                                    </form>
+                                </div>
+
+                                <div class="row">
+
+                                    <div id="test" style="width: 600px"></div>
+
+
+                                    <div class="col-sm-12">
+                                        <div class="widget-box transparent">
+                                            <div class="widget-header widget-header-flat">
+                                                <h4 class="widget-title lighter">
+                                                    <i class="ace-icon fa fa-sitemap"></i>
+                                                    <span>集群信息</span> &nbsp;&nbsp;
+                                                    <button class="btn btn-xs btn-success"
+                                                            id="visualizeClustersB">可视化
+                                                    </button>
+
+                                                    <button class="btn btn-xs btn-inverse pull-right"
+                                                            id="terminalB">
+                                                        <i class="fa fa-terminal" aria-hidden="true"></i> 命令
+                                                    </button>
+                                                </h4>
+                                            </div>
+
+                                            <div class="widget-body" id="clusterStatusM">
+                                                <div class="widget-main no-padding">
+                                                    <table class="table table-bordered table-striped"
+                                                           style="    border-width: 1px;">
+                                                        <thead class="thin-border-bottom">
+                                                        <tr>
+                                                            <th>地址</th>
+                                                            <th>模式</th>
+                                                            <th>连接数</th>
+                                                            <th>持久节点</th>
+                                                            <th>临时节点</th>
+                                                            <th>Watch数</th>
+                                                            <th>数据大小</th>
+                                                            <th>状态</th>
+                                                            <!-- TODO 机房信息 这个还是 图形展示比较好 -->
+                                                            <!-- 状态信息 -->
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr v-for="status in clusterStatus" :serverID="status.serverID">
+                                                            <td>{{status.host}}:{{status.port}}</td>
+                                                            <td>{{status.mode}}</td>
+                                                            <td>
+                                                                <a href="javascript:;" class="showConnsA"><b>{{status.connNum}}</b></a>
+                                                            </td>
+                                                            <td>{{status.nodeNum}}</td>
+                                                            <td>{{status.enodeNum}}</td>
+                                                            <td>
+                                                                <a href="javascript:;" class="showWatchsA"><b>{{status.watchCount}}</b></a>
+                                                            </td>
+                                                            <!--<td>{{status.followers}}</td>-->
+                                                            <td>{{status.dataSize}}</td>
+
+                                                            <!--// class="label-warning"-->
+                                                            <td v-bind:class="{'label-warning':!status.ok}">{{status.ok
+                                                                ? '正常' : '异常'}}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div><!-- /.widget-main -->
+                                            </div><!-- /.widget-body -->
+                                        </div><!-- /.widget-box -->
+                                    </div><!-- /.span -->
+
+                                    <div class="clearfix"></div>
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <div class="widget-box transparent">
+                                            <div class="widget-header widget-header-flat">
+                                                <h4 class="widget-title lighter">
+                                                    <i class="ace-icon fa fa-barcode"></i>概要信息
+                                                </h4>
+                                            </div>
+
+                                            <div class="widget-body">
+                                                <div class="tabbable">
+                                                    <ul class="nav nav-tabs" id="myTab">
+                                                        <li v-for="status in clusterStatus" class=""
+                                                            :serverID="status.serverID">
+                                                            <a data-toggle="tab">
+                                                                <span v-if="status.mode == 'leader'">
+                                                                    <i class="green ace-icon glyphicon glyphicon-flag bigger"></i>
+                                                                </span>
+                                                                {{status.host}}:{{status.port}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+
+                                                    <div class="row">
+
+                                                        <div class="widget-box transparent">
+                                                            <div class="widget-header widget-header-flat"
+                                                                 style="border-bottom: 1px dotted #DCE8F1;padding-left: 10px">
+                                                                <h5 class="widget-title lighter">
+                                                                    实时流量
+                                                                </h5>
+                                                            </div>
+
+                                                            <div class="widget-body">
+
+                                                            </div><!-- /.widget-body -->
+                                                        </div><!-- /.widget-box -->
+
+
+                                                        <div class="col-sm-12">
+                                                            <div id="chart03"
+                                                                 style="padding: 0px; position: relative;height: 450px">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <br><br>
+                                                    <div class="row">
+
+                                                        <div class="widget-box transparent">
+                                                            <div class="widget-header widget-header-flat"
+                                                                 style="border-bottom: 1px dotted #DCE8F1;padding-left: 10px">
+                                                                <h5 class="widget-title lighter">
+                                                                    事物处理
+                                                                </h5>
+                                                            </div>
+
+                                                            <div class="widget-body">
+
+                                                            </div><!-- /.widget-body -->
+                                                        </div><!-- /.widget-box -->
+
+
+                                                        <div class="col-sm-3"
+                                                             style="padding-left: 5%; padding-top: 3%">
+
+                                                            <ul class="list-unstyled spaced"
+                                                                style="margin-top: 13px;margin-bottom: 9px;">
+                                                                <li>
+                                                                    <i class="ace-icon fa fa-check bigger-160 purple"></i>
+                                                                    已处理事物量: <span id="serverZxidCount"></span>
+                                                                </li>
+
+                                                                <li>
+                                                                    <i class="ace-icon fa fa-circle bigger-160 green"></i>
+                                                                    最小处理延时: <span id="serverMinLatency"></span> ms
+                                                                </li>
+
+                                                                <li>
+                                                                    <i class="ace-icon fa fa-bolt bigger-160 red"></i>
+                                                                    最大处理延时: <span id="serverMaxLatency"></span> ms
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+
+                                                        <div class="col-sm-9">
+                                                            <div id="chart04"
+                                                                 style="padding: 0px; position: relative;height: 450px">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.widget-body -->
+                                    </div><!-- /.widget-box -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="modal fade" id="showClustersWIN" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+                                    <div class="modal-dialog" v-bind:style="{width: winWith + 'px' }">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">
+                                                    <b>集群信息</b>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="margin-bottom: 35px">
+                                                <div>
+
+                                                    <div v-if="status.flag">
+                                                        <div class="alert alert-info" style="width: 260px">
+                                                            <strong>集群正常</strong>
+                                                        </div>
+                                                    </div>
+
+                                                    <div v-else>
+                                                        <div class="alert alert-danger" style="width: 420px">
+                                                            <strong>集群异常</strong>
+
+                                                            <table>
+                                                                <tr v-for="leader in leaders">
+                                                                    <td>{{leader.host}}:{{leader.port}}</td>
+                                                                    <td>{{leader.mode}}</td>
+                                                                    <td>园区机房: 机柜A</td>
+                                                                    <td>{{leader.status}}</td>
+                                                                </tr>
+
+                                                                <tr v-for="other in others">
+                                                                    <td>{{other.host}}:{{other.port}}</td>
+                                                                    <td>{{other.mode}}</td>
+                                                                    <td>园区机房: 机柜A</td>
+                                                                    <td>{{other.status}}</td>
+                                                                </tr>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="chart" class="orgChart center">
+                                                </div>
+                                                <div>
+                                                    <div v-if="status.flag">
+                                                        <ul id="org" style="display:none">
+
+                                                            <li>
+                                                                <div class="nodeInfo">
+                                                                    <div><b>{{leaders[0].mode}}</b></div>
+                                                                    <div>{{leaders[0].host}}:{{leaders[0].port}}
+                                                                    </div>
+                                                                    <div>园区机房: 机柜A</div>
+                                                                </div>
+                                                                <ul>
+                                                                    <li v-for="other in others">
+                                                                        <div class="nodeInfo">
+                                                                            <div><b>{{other.mode}}</b></div>
+                                                                            <div>{{other.host}}:{{other.port}}
+                                                                            </div>
+                                                                            <div>园区机房: 机柜A</div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+
+                                <div class="modal fade" id="showConnsWIN" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width: 820px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">
+                                                    <b>连接详情</b>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="height: 600px;overflow-y: scroll">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <!--TODO 监听端口数 -->
+                                                        <th>地址</th>
+                                                        <th>端口号</th>
+                                                        <th>发送</th>
+                                                        <th>接收</th>
+                                                        <th>最大延迟</th>
+                                                        <th>建立时间</th>
+                                                        <th>最后响应时间</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                    <tr v-for="connDetail in connDetails">
+                                                        <td>{{connDetail.host}}</td>
+                                                        <td>{{connDetail.port}}</td>
+                                                        <td>{{connDetail.sent}}</td>
+                                                        <td>{{connDetail.recved}}</td>
+                                                        <td>{{connDetail.maxlat}} ms</td>
+                                                        <td>{{connDetail.est | timestamp}}</td>
+                                                        <td>{{connDetail.lresp | timestamp}}</td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+
+                                <div class="modal fade" id="showConnWchsWIN" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width: 820px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">
+                                                    <b>Watch 详情</b>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="height: 600px;overflow-y: scroll">
+                                                <ul id="tree2"></ul>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                                <div class="modal fade" id="fourCommondWIN" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width: 880px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">
+                                                    <b>运行命令</b>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <form class="form-horizontal" role="form">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-2 control-label no-padding-right">
+                                                                    服务器 </label>
+                                                                <div class="col-sm-4">
+                                                                    <select class="form-control" id="fourcmdselect">
+                                                                        <option value="">请选择</option>
+                                                                        <option v-for="status in clusterStatus"
+                                                                                :value="status.serverID">
+                                                                            {{status.host}}:{{status.port}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="btn-group open">
+                                                                    <button data-toggle="dropdown"
+                                                                            class="btn btn-primary btn-white dropdown-toggle"
+                                                                            aria-expanded="true">
+                                                                        命令
+                                                                        <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="conf">conf</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="cons">cons</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="dump">dump</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="envi">envi</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="reqs">reqs</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="ruok">ruok</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="stat">stat</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="wchs">wchs</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="wchc">wchc</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="wchp">wchp</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="mntr">mntr</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="srvr">srvr</a></li>
+                                                                        <li><a class="fourcmdB" href="javascript:;"
+                                                                               cmd="isro">isro</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- PAGE CONTENT ENDS -->
+                                                    <div class="col-xs-12" style="padding: 15px;">
+                                                        <pre style="height: 650px">
+                                                            <code id="cmdResp" style="float: left;">
+                                                            </code>
+                                                        </pre>
+                                                    </div>
+                                                </div><!-- /.col -->
+                                            </div>
+
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal -->
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.widget-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="hr hr32 hr-dotted"></div>
+            <!-- PAGE CONTENT ENDS -->
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content -->
+    </div>
+</div>
+<!-- /.main-content -->
+</div>
+</div>
+
+<!-- /.main-container -->
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    /**
+     *  gloal data
+     *
+     */
+    var PageGlobalData = {
+        clusterID: null
+    };
+
+
+    jQuery(function ($) {
+
+        /**
+         *  charts
+         */
+        status_charts.init();
+        window.onresize = function () {
+            var charts = status_charts.getCharts();
+            for (var i in charts) {
+                charts[i].resize();
+            }
+        }
+
+
+        /**
+         *  vues
+         */
+        var tabClusterStatusVue = new Vue({
+            el: '#myTab',
+            data: {
+                clusterStatus: []
+            },
+            methods: {
+                setClustersData: function (data) {
+                    this.clusterStatus.splice(0, this.clusterStatus.length);
+                    this.clusterStatus = data;
+                }
+            }
+        })
+
+        var fourCommondVue = new Vue({
+            el: '#fourCommondWIN',
+            data: {
+                clusterStatus: []
+            },
+            methods: {
+                setClustersData: function (data) {
+                    this.clusterStatus.splice(0, this.clusterStatus.length);
+                    this.clusterStatus = data;
+                }
+            }
+        })
+
+
+        // cluster status
+        var clusterStatusVue = new Vue({
+            el: '#clusterStatusM',
+            data: {
+                clusterStatus: [],
+                serverStatus: {}
+            },
+            methods: {
+                showClusterData: function () {
+                    var _self = this;
+
+                    var params = {clusterID: PageGlobalData.clusterID}
+
+                    $.get(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/status/cluster", params).done(function (result) {
+
+                        var clusterStatus = result.data;
+                        _self.clusterStatus = clusterStatus;
+                        tabClusterStatusVue.setClustersData(clusterStatus)
+                        fourCommondVue.setClustersData(clusterStatus)
+                        showClustersVue.setClustersData(clusterStatus)
+
+                    }).fail(function (error) {
+
+                        console.log(error)
+                        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+                    });
+
+                },
+                setServerData: function (data) {
+                    this.serverStatus = data;
+                }
+            }
+        })
+
+        var connsWINVue = new Vue({
+            el: '#showConnsWIN',
+            data: {
+                connDetails: []
+            },
+            methods: {
+                setConnDetailsData: function (data) {
+                    this.connDetails = data;
+                },
+                clearConnDetailsData: function () {
+                    this.connDetails.splice(0, this.connDetails.length);
+                }
+            }
+        })
+
+        var connWchsWINVue = new Vue({
+            el: '#showConnWchsWIN',
+            data: {
+                connDetails: []
+            },
+            methods: {
+                setConnDetailsData: function (data) {
+                    this.connDetails = data;
+                },
+                clearConnDetailsData: function () {
+                    this.connDetails.splice(0, this.connDetails.length);
+                }
+            }
+        })
+
+        var showClustersVue = new Vue({
+            el: '#showClustersWIN',
+            data: {
+                winWith: 960,
+                status: {
+                    flag: true,
+                    text: ''
+                },
+                leaders: [
+                    {}
+//                    {
+//                        host: '192.168.1.123',
+//                        port: '2',
+//                        mode: 'leader',
+//                        status: 'ok'
+//                    }
+                ],
+                others: [
+//                    {
+//                        host: '192.168.1.123',
+//                        port: '5',
+//                        mode: 'looking',
+//                        status: 'ok'
+//                    },
+//                    {
+//                        host: '192.168.1.123',
+//                        port: '8',
+//                        mode: '9',
+//                        status: 'ok'
+//                    }
+                ],
+                observers: [
+
+//                    {
+//                        host: '192.168.1.123',
+//                        port: '5',
+//                        mode: 'looking',
+//                        status: 'ok'
+//                    },
+//                    {
+//                        host: '192.168.1.123',
+//                        port: '8',
+//                        mode: '9',
+//                        status: 'ok'
+//                    }
+                ]
+            },
+            methods: {
+                setClustersData: function (clusterDatas) {
+
+                    var _that = this
+                    _that.status = {flag: true}
+                    _that.leaders.splice(0, _that.leaders.length);
+                    _that.others.splice(0, _that.others.length);
+
+
+                    // TODO 考虑网络抖动时, 出现多个leader
+
+                    for (var i in clusterDatas) {
+                        var clusData = clusterDatas[i];
+                        if (clusData.mode == 'leader') {
+
+                            _that.leaders.push({
+                                host: clusData.host,
+                                port: clusData.port,
+                                mode: clusData.mode,
+                                status: clusData.ok
+                            })
+                        } else {
+                            _that.others.push({
+                                host: clusData.host,
+                                port: clusData.port,
+                                mode: clusData.mode,
+                                status: clusData.ok
+                            })
+                        }
+                    }
+                    // if
+                    if (_that.leaders.length != 1) {
+                        _that.status.flag = false
+                    }
+
+                    // modal width
+                    this.winWith = 820;
+                    if (this.others.length > 5)
+                        this.winWith += (this.others.length - 6) * 120
+
+                },
+                clearClustersData: function () {
+                    this.connDetails.splice(0, this.connDetails.length);
+                }
+            }
+        })
+
+
+        /**
+         *  bind events
+         */
+        $('.fourcmdB').click(function () {
+            var serverID = $("#fourcmdselect").val();
+            var clusterID = PageGlobalData.clusterID
+
+            if (CommonUtil.isStringNull(clusterID)) {
+                layer.msg('请选择集群!!');
+                return;
+            }
+            ;
+
+            if (CommonUtil.isStringNull(serverID)) {
+                layer.msg('请选择服务器!!');
+                return;
+            }
+            ;
+
+            var cmd = $(this).attr("cmd");
+            var params = {
+                clusterID: clusterID,
+                serverID: serverID,
+                cmd: cmd
+            }
+            $.get(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/status/fourLetterCmd", params).done(function (resObj) {
+
+                var data = resObj.data;
+                $("#cmdResp").empty();
+                $("#cmdResp").html(data);
+
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            })
+
+
+        })
+
+        $('#submitClusterID').click(function () {
+            PageGlobalData.clusterID = $(".chosen-select").val();
+            clusterStatusVue.showClusterData()
+        })
+        $(document).on("click", ".showConnsA", function () {
+            var that = this;
+            PageGlobalData.serverID = $(that).closest("tr").attr("serverID");
+            $('#showConnsWIN').modal('show')
+
+        });
+        $(document).on("click", ".showWatchsA", function () {
+            var that = this;
+            PageGlobalData.serverID = $(that).closest("tr").attr("serverID");
+            $('#showConnWchsWIN').modal('show')
+
+        });
+
+        $(document).on("click", "#visualizeClustersB", function () {
+            // showClustersVue.setClustersData(123)
+            var that = this;
+            PageGlobalData.serverID = $(that).closest("tr").attr("serverID");
+            $('#showClustersWIN').modal('show')
+
+        });
+        $(document).on("click", "#terminalB", function () {
+            $('#fourCommondWIN').modal('show')
+        });
+
+        $(document).on("click", "#myTab li", function () {
+
+            var serverID = $(this).attr("serverID")
+
+            status_charts.getCharts().chart03.showLoading({text: '数据获取中'});
+
+            // status_charts.getCharts().chart03.setOption({xAxis: [{data: []}],series: [{data: []}, {data: []}]});
+            // status_charts.getCharts().chart04.setOption({xAxis: [{data: []}],series: [{data: []}, {data: []}]});
+
+            $.get(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/status/network", {serverID: serverID}).done(function (resObj) {
+
+                var datas = resObj.data;
+
+                var timestamps = new Array();
+                var timestamps_tmp = new Array();
+
+                var receives = new Array();
+                var sents = new Array();
+                var avgLatencys = new Array();
+                var maxLatencys = new Array();
+                var minLatencys = new Array();
+                var zxidCounts = new Array();
+                var outstands = new Array();
+
+                for (var i in datas) {
+
+                    timestamps.push(CommonUtil.dateFormat(new Date(datas[i].obtainTimestamp), "hh:mm:ss"))
+                    timestamps_tmp.push(datas[i].obtainTimestamp)
+
+                    sents.push(datas[i].sent)
+                    receives.push(datas[i].received)
+                    zxidCounts.push(datas[i].zxidCount)
+                    avgLatencys.push(datas[i].avgLatency)
+                    maxLatencys.push(datas[i].maxLatency)
+                    minLatencys.push(datas[i].minLatency)
+                    outstands.push(datas[i].outstands)
+
+                }
+
+
+                $("#serverZxidCount").html(zxidCounts[zxidCounts.length - 1])
+                $("#serverMinlatency").html(minLatencys[minLatencys.length - 1])
+                $("#serverMaxLatency").html(maxLatencys[maxLatencys.length - 1])
+
+                // chart03.showLoading({text: '数据获取中'});
+                status_charts.getCharts().chart03.hideLoading();
+
+                clusterStatusVue.setServerData({
+                    zxidCount: zxidCounts[zxidCounts.length - 1],
+                    minLatency: minLatencys[minLatencys.length - 1],
+                    maxLatency: maxLatencys[maxLatencys.length - 1]
+                })
+
+
+                status_charts.getCharts().chart03.setOption({
+                    xAxis: [{data: timestamps}],
+                    // yAxis: {min: min - 10, max: max + 10},
+                    series: [{data: sents}, {data: receives}]
+                });
+
+
+                status_charts.getCharts().chart04.setOption({
+                    xAxis: [{data: timestamps}],
+                    // yAxis: {min: min - 10, max: max + 10},
+                    series: [{data: avgZxid(timestamps_tmp, zxidCounts)}, {data: outstands}, {data: avgLatencys}]
+                });
+
+
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            })
+
+
+        });
+
+
+        /**
+         *  modals
+         */
+        $('#fourCommondWIN').on('shown.bs.modal', function () {
+        }).on('hide.bs.modal', function () {
+            $("#commondContent").empty();
+
+            if (PageGlobalData.terminal != null) {
+                PageGlobalData.terminal.destroy();
+            }
+
+            if (PageGlobalData.websocket != null) {
+                PageGlobalData.websocket.close();
+            }
+        });
+        $('#showClustersWIN').on('shown.bs.modal', function () {
+
+            $("#chart").html('')
+            jQuery(document).ready(function () {
+                $("#org").jOrgChart({
+                    chartElement: '#chart',
+                    dragAndDrop: false,
+                });
+            });
+
+        }).on('hide.bs.modal', function () {
+            connsWINVue.clearConnDetailsData()
+            // $("#showConnsWIN").find("form")[0].reset();
+        });
+        $('#showConnsWIN').on('shown.bs.modal', function () {
+            var params = {
+                clusterID: PageGlobalData.clusterID,
+                serverID: PageGlobalData.serverID
+            }
+
+            $.get(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/status/conns", params).done(function (resObj) {
+
+                var datas = resObj.data;
+                connsWINVue.setConnDetailsData(datas)
+
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            })
+
+        }).on('hide.bs.modal', function () {
+            connsWINVue.clearConnDetailsData()
+        });
+        $('#showConnWchsWIN').on('shown.bs.modal', function () {
+            var params = {
+                clusterID: PageGlobalData.clusterID,
+                serverID: PageGlobalData.serverID
+            }
+
+            $.get(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/status/connWchs", params).done(function (resObj) {
+                var datas = resObj.data
+                var tree_data_2 = {
+                    'music': {
+                        text: 'Music',
+                        type: 'folder',
+                        'icon-class': 'orange',
+                        children: [
+                            {text: '<i class="ace-icon fa fa-music blue"></i> song1.ogg', type: 'item'},
+                            {text: '<i class="ace-icon fa fa-music blue"></i> song2.ogg', type: 'item'},
+                            {text: '<i class="ace-icon fa fa-music blue"></i> song3.ogg', type: 'item'},
+                            {text: '<i class="ace-icon fa fa-music blue"></i> song4.ogg', type: 'item'},
+                            {text: '<i class="ace-icon fa fa-music blue"></i> song5.ogg', type: 'item'}
+                        ]
+
+                    }
+
+
+                }
+
+
+                var tt = {};
+                for (var i in datas) {
+
+                    var itemV = {};
+
+                    // itemV["children"] = 'folder'
+
+
+                    //itemV[]
+                    itemV["text"] = i
+                    itemV["type"] = 'folder'
+
+                    var sitems = new Array();
+                    for (var j in datas[i]) {
+                        sitems.push({
+                                    text: '  ' + datas[i][j],
+                                    type: 'item'
+                                }
+                        )
+                    }
+
+                    itemV["children"] = sitems
+
+                    tt[i] = itemV;
+
+
+                }
+
+                console.log(tt)
+
+                tree_data_2 = tt;
+
+                var dataSource2 = function (options, callback) {
+                    var $data = null
+                    if (!("text" in options) && !("type" in options)) {
+                        $data = tree_data_2;
+                        callback({data: $data});
+                        return;
+                    }
+                    else if ("type" in options && options.type == "folder") {
+                        $data = options.children || {};
+                    }
+                    if ($data != null) {
+                        callback({data: $data})
+                    }
+                }
+
+                $('#tree2').ace_tree({
+                    dataSource: dataSource2,
+                    loadingHTML: '<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',
+                    'open-icon': 'ace-icon fa fa-sitemap',
+                    'close-icon': 'ace-icon fa fa-folder',
+                    'selectable': false,
+                    multiSelect: false,
+                    'selected-icon': null,
+                    'unselected-icon': null
+                });
+
+
+            }).fail(function (error) {
+                console.log(error)
+                $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+            })
+
+        }).on('hide.bs.modal', function () {
+            //清空事件
+            $("#tree2").unbind('click');
+            $("#tree2").removeData("fu.tree");
+            $("#tree2").empty()
+        });
+
+
+        // showWatchsA
+
+    })
+
+</script>
+
+<script>
+
+    /**
+     *  init datas
+     */
+    $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/listZKClusters").done(function (resObj) {
+
+        var dataz = resObj.data;
+        for (var o in dataz) {
+            $(".clusterList").append("<option value='" + dataz[o].clusterID + "'>" + dataz[o].clusterName + "</option>");
+        }
+        $('.chosen-select').chosen();
+
+    }).fail(function (error) {
+        console.log(error)
+        $.scojs_message("发生错误, 稍后再试", $.scojs_message.TYPE_ERROR, 40000);
+    })
+
+
+</script>
+
+
+<script>
+    /** functions */
+
+    /** 计算平均的事物处理数量 */
+    function avgZxid(time, zxids) {
+
+        console.log("计算平均处理")
+
+        var r = [0]
+        var tmp_1 = new Array()
+        var tmp_2 = new Array()
+
+        for (var j = 1; j < time.length; j++) {
+            tmp_1.push(time[j] - time[j - 1])
+            tmp_2.push(zxids[j] - zxids[j - 1])
+        }
+
+        for (var m = 0; m < tmp_1.length; m++) {
+            // 1, 保留两位
+            // 2, ms 转为 s
+            var rate = tmp_2[m] / ( tmp_1[m] / 1000 )
+            r.push(CommonUtil.retain2wei(rate))
+        }
+
+        return r;
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+
+
+    });
+</script>
+</body>
+
+</html>
+
+
+
