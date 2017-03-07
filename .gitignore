@@ -5,3 +5,15 @@
 .idea
 *.iml
 artJava-zookeeper-admin/target/
+ /target
+/.idea
+*.iml
+*.ipr
+*.iws
+.idea
+*/*.log
+*/target/
+*.DS_Store
+*.classpath
+*.settings
+*.project
