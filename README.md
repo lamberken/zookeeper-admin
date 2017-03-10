@@ -15,9 +15,6 @@ Hadoop、Storm、Kafka、Hbase等大数据集群组件使用越来越多，依�
 ### 相关
 QQ 2217232293
 
-### 代码组织
-![代码组织](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/code.png)
-
 ### 主界面
 ![主界面](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/dashboard1.png)
 
