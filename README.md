@@ -13,16 +13,10 @@ Hadoop、Storm、Kafka、Hbase等大数据集群组件使用越来越多，依�
 - **监控方面**  实时监控预警，针对集群，可自定义设置监控项目，配置预警级别
 
 ### 相关
-[QQ交流群 559557330](https://jq.qq.com/?_wv=1027&k=45jBMWJ)
-
-### 代码组织
-![代码组织](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/code.png)
+QQ 2217232293
 
 ### 主界面
 ![主界面](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/dashboard1.png)
 
-![主界面](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/dashboard2.png)
-
-![主界面](https://raw.githubusercontent.com/artJava/artJava-zookeeper-admin/master/src/main/webapp/assets/images/intro/dashboard3.png)
 
 
