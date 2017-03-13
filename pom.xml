@@ -1,10 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>artJava-parent</artifactId>
-        <groupId>org.artJava</groupId>
-        <version>1.0</version>
-    </parent>
     <name>artJava-zookeeper-admin</name>
     <artifactId>artJava-zookeeper-admin</artifactId>
     <modelVersion>4.0.0</modelVersion>
