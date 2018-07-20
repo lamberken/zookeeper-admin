@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
 
-    <display-name>artJava-zookeeper-admin</display-name>
+    <display-name>zookeeper-admin</display-name>
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring-config.xml</param-value>
@@ -16,7 +16,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <servlet>
-        <servlet-name>artJava-zookeeper-admin</servlet-name>
+        <servlet-name>zookeeper-admin</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -25,14 +25,14 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>artJava-zookeeper-admin</servlet-name>
+        <servlet-name>zookeeper-admin</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!-- filters -->
     <filter>
         <filter-name>cors</filter-name>
-        <filter-class>org.artjava.zookeeper.controller.filter.CORSFilter</filter-class>
+        <filter-class>com.zookeeper.zkadmin.controller.filter.CORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cors</filter-name>

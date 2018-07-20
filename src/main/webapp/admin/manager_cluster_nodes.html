@@ -276,7 +276,7 @@
                                             <!-- /.col -->
                                             <div class="col-sm-8">
                                                 <!--<div class="widget-box transparent" style="position: fixed; top: 45px; z-index: 1030;">-->
-                                                <div class="widget-box transparent">
+                                                <div class="widget-box transparent" id="nodeDataDiv">
                                                     <div class="widget-header widget-header-flat">
                                                         <h4 class="widget-title lighter">
                                                             <i class="ace-icon glyphicon glyphicon-th"></i>
@@ -582,9 +582,23 @@
                 }
             }
         })
-
-
     })
+
+    $(window).scroll(function (event) {
+        var wScrollY = window.scrollY; // 当前滚动条位置
+
+        if (wScrollY > 100) {
+            $("#nodeDataDiv").css("position", "fixed");
+            $("#nodeDataDiv").css("top", "50px");
+        }
+
+        if (wScrollY < 50) {
+            $("#nodeDataDiv").css("position", "");
+            $("#nodeDataDiv").css("top", "");
+        }
+
+    });
+
 </script>
 </body>
 

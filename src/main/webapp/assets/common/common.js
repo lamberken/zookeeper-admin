@@ -11,8 +11,7 @@ $.fn.modal.Constructor.DEFAULTS.backdrop = 'static'
  *  domain
  */
 var ZOOKEEPER_WEB_ADMIN_CONFIG = {
-     domain: 'http://localhost:8080',
-    // domain: 'http://tcservice.t.17usoft.com/ghvip',
+    domain: 'http://localhost:8080',
     environment : 'test',
 
     isLogin: true,

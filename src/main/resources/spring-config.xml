@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/util/spring-util.xsd"
        xmlns:context="http://www.springframework.org/schema/context"
 >
-    <context:component-scan base-package="org.artjava.zookeeper">
+    <context:component-scan base-package="com.zookeeper.zkadmin">
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation"
