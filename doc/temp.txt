@@ -1,0 +1,27 @@
+
+
+
+
+/usr/local/tomcat/webapps
+
+docker run -p 8080:8080 docker.io/tomcat
+docker cp target/zookeeper-admin.war 3cb492a27475 :/usr/local/tomcat/webapps
+
+/usr/local/tomcat/webapps
+
+docker run -tid --name zkadmin -p 8080 tomcat /bin/bash
+docker cp zkadmin.war zkadmin:/usr/local/tomcat/webapps/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
