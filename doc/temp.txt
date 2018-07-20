@@ -2,18 +2,15 @@
 
 
 
-/usr/local/tomcat/webapps
-
-docker run -p 8080:8080 docker.io/tomcat
-docker cp target/zookeeper-admin.war 3cb492a27475 :/usr/local/tomcat/webapps
-
-/usr/local/tomcat/webapps
-
-docker run -tid --name zkadmin -p 8080 tomcat /bin/bash
-docker cp zkadmin.war zkadmin:/usr/local/tomcat/webapps/
-
-
-
+mvn clean package
+sudo docker rm -f zkadmin-test
+sudo docker run -d \
+    --restart=always \
+    --name zkadmin-test \
+    --privileged=true \
+    --network host  \
+    docker.io/tomcat
+sudo docker cp target/zookeeper-admin.war zkadmin-test:/usr/local/tomcat/webapps/
 
 
 

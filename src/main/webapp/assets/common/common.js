@@ -11,7 +11,7 @@ $.fn.modal.Constructor.DEFAULTS.backdrop = 'static'
  *  domain
  */
 var ZOOKEEPER_WEB_ADMIN_CONFIG = {
-    domain: 'http://localhost:8080',
+    domain: 'http://localhost:8080/zookeeper-admin',
     environment : 'test',
 
     isLogin: true,
