@@ -1,6 +1,7 @@
 
 
-
+git clone https://github.com/lamber-ken/zookeeper-admin.git
+cd zookeeper-admin
 
 mvn clean package
 sudo docker rm -f zkadmin-test
@@ -12,11 +13,7 @@ sudo docker run -d \
     docker.io/tomcat
 sudo docker cp target/zookeeper-admin.war zkadmin-test:/usr/local/tomcat/webapps/
 
-
-
-
-
-
+http://localhost:8080/zookeeper-admin
 
 
 
