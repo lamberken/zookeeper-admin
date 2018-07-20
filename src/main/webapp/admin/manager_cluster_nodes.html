@@ -441,6 +441,8 @@
 <!-- /.main-container -->
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+    var treee;
+
     jQuery(function ($) {
 
         $.post(ZOOKEEPER_WEB_ADMIN_CONFIG.domain + "/cluster/listZKClusters").done(function (resObj) {
@@ -479,9 +481,12 @@
             data: metaData
         })
 
+
+
+
         $('#submitClusterID').click(function () {
             $.jstree.destroy("#nodeTree")
-            $('#nodeTree').jstree({
+            treee = $('#nodeTree').jstree({
                 "types": {
                     "default": {
                         "icon": "fa fa-folder fa-folder-yellow bigger-125"
@@ -514,6 +519,14 @@
             }).delegate("a", "click", function (event, data) {
                 event.preventDefault();
             }).bind('select_node.jstree', function (e, data) {
+
+                console.log(1);
+
+                data.instance.open_node(e)
+
+                treee.jstree(true).open_node(e);
+
+                //treee.jstree("toggle_node", $(this).parent());
 
                 var nodePath = data.node.id;
                 var params = {}

@@ -181,7 +181,7 @@
                     <stopKey>foo</stopKey>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <webAppConfig>
-                        <contextPath>/</contextPath>
+                        <contextPath>/zookeeper-admin</contextPath>
                     </webAppConfig>
                 </configuration>
             </plugin>
