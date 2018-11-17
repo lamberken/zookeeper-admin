@@ -1,6 +1,10 @@
 
+# 重点 zookeeper-admin 第二版本即将发布，敬请等待
+- 去除tomcat，采用spring-boot或者jetty方式开发
+- 默认采用leveldb进行存储
+- 打通 docker.io 直接构建可运行镜像
+
 # ZooKeeper Admin
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ### 简介
 Hadoop、Storm、Kafka、Hbase等大数据集群组件使用越来越多，依赖Zookeeper进行工作，自然而然ZooKeeper的维护工作尤为重要！！而，针对Zookeeper集群的监控工具相对较少或者监控比较片面。
