@@ -1,10 +1,4 @@
 
-# 重点 zookeeper-admin 第二版本即将发布，敬请等待
-- 去除tomcat，采用spring-boot或者jetty方式开发
-- 默认采用leveldb进行存储
-- 打通与 docker.io 的通道，一键即可运行
-
-<br />
 # ZooKeeper Admin
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
