@@ -17,15 +17,15 @@
         <slf4j-log4j12.version>1.7.6</slf4j-log4j12.version>
         <slf4j-api>1.7.6</slf4j-api>
         <servlet.version>2.5</servlet.version>
-        <spring.verion>4.2.0.RELEASE</spring.verion>
+        <spring.verion>4.3.17.RELEASE</spring.verion>
         <aspectj.version>1.8.6</aspectj.version>
-        <jackson.version>2.6.0</jackson.version>
+        <jackson.version>2.9.10.1</jackson.version>
 
         <hadoop.version>2.5.0-cdh5.2.0</hadoop.version>
         <hive.version>1.1.0-cdh5.5.0</hive.version>
         <storm.version>1.0.1</storm.version>
         <kafka.version>0.8.1.1</kafka.version>
-        <zookeeper.version>3.4.6</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
         <curator.version>2.10.0</curator.version>
 
         <elasticsearch.version>2.3.3</elasticsearch.version>
