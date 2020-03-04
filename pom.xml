@@ -19,7 +19,7 @@
         <servlet.version>2.5</servlet.version>
         <spring.verion>4.3.18.RELEASE</spring.verion>
         <aspectj.version>1.8.6</aspectj.version>
-        <jackson.version>2.9.10.1</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
 
         <hadoop.version>2.5.0-cdh5.2.0</hadoop.version>
         <hive.version>1.1.0-cdh5.5.0</hive.version>
