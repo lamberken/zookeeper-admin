@@ -17,7 +17,7 @@
         <slf4j-log4j12.version>1.7.6</slf4j-log4j12.version>
         <slf4j-api>1.7.6</slf4j-api>
         <servlet.version>2.5</servlet.version>
-        <spring.verion>4.3.18.RELEASE</spring.verion>
+        <spring.verion>5.2.1.RELEASE</spring.verion>
         <aspectj.version>1.8.6</aspectj.version>
         <jackson.version>2.9.10</jackson.version>
 
